@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="assets/img/logo.png" sizes="32x32" type="image/png">
+  <title>Notícias sobre Animais</title>
+  <!-- Folha de estilos principal. Mantém as imagens originais, muda só layout. -->
+  <link rel="stylesheet" href="css/outros.css">
+</head>
+
+<body>
+  <!-- Link de pulo para acessibilidade. Leva direto ao conteúdo principal. -->
+  <a class="skip-link" href="#conteudo-principal">Pular para o conteúdo</a>
+  <header class="site-header" role="banner">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="Início PROCONSVATE">PROCONSVATE</a>
+      <img class="logo-float" src="assets/img/PROCONSVATELOGO2.png" width="48" height="48" alt="Logo PROCONSVATE"
+        aria-hidden="true">
+      <nav id="menu-principal" class="site-nav" aria-label="Menu principal">
+        <ul>
+          <li><a href="index.html" class="active button1">Início</a></li>
+          <li><a href="noticias.html" aria-current="page" class="active button2">Notícias</a></li>
+          <li><a href="quiz.html" class="active button3">Quiz</a></li>
+          <li><a href="sobre.html" class="active button4">Sobre</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main id="conteudo-principal" tabindex="-1" class="site-main" role="main">
+
+    <iframe src="https://www.cnnbrasil.com.br/tudo-sobre/animais/" id="product-frame"
+      title="Lista de notícias sobre animais da CNN Brasil"></iframe>
+
+  </main>
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <p class="proconsvate"><strong>Programa de Conscientização de Vida Aquática e Terrestre (PROCONSVATE)</strong></p>
+      <p><a class="back-to-top" href="#topo" onclick="window.scrollTo({top:0,behavior:'smooth'})">Voltar ao topo</a></p>
+      <a href="https://wa.me/5538988064942" class="number-phone btn-float" target="_blank" rel="noopener">Contate
+        nos</a>
+    </div>
+  </footer>
+  <script src="js/script.js" defer></script>
+</body>
+
+</html>
