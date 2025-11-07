@@ -1,0 +1,670 @@
+/* ============================
+   PROCONSVATE - styles.css
+   Desenvolvido por Matheus Antunes Reis
+   Todos os direitos reservados
+   Propriedade de Matheus Antunes Reis
+   UNINTER - 2025
+   Este projeto será linkado ao github, para
+   atualizações, melhorias, correção de bugs e 
+   features.
+   ============================ */
+
+/* ----------------------------
+   Tokens de design (CSS vars)
+   ---------------------------- */
+
+:root {
+  --bg: #0b1a14;
+  /* fundo escuro para bom contraste com imagem */
+  --surface: #0e2a21;
+  --text: #ffffff;
+  --muted: #c7e7db;
+  --accent: #00b5a8;
+  /* botão primário */
+  --accent-2: #0ea34a;
+  /* botão secundário */
+  --focus: #ffd24a;
+  /* cor de foco altamente visível */
+  --radius: 14px;
+  --shadow: 0 10px 24px rgba(0, 0, 0, .35);
+  --maxw: 1200px;
+  --space: clamp(1rem, 2vw, 2rem);
+  --h1: clamp(1.6rem, 3.5vw, 2.6rem);
+  --h2: clamp(1.25rem, 2.5vw, 1.75rem);
+  --p: clamp(1rem, 1.4vw, 1.1rem);
+}
+
+/* Reset simples + tipografia */
+* {
+  box-sizing: border-box
+}
+
+html {
+  scroll-behavior: smooth
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+  line-height: 1.6;
+  color: var(--text);
+  background-color: var(--bg);
+  min-height: 100dvh;
+  /* Mantém imagem de fundo original do projeto */
+  background-image: url("../assets/img/backgroud.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  /* máscara escura para legibilidade */
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, .55), rgba(0, 0, 0, .65));
+  pointer-events: none;
+}
+
+/* Acessibilidade: link de pulo visível ao foco */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  background: #111;
+  color: #fff;
+  padding: .75rem 1rem;
+  border-radius: 0 0 var(--radius) var(--radius);
+  text-decoration: none;
+  z-index: 10000;
+}
+
+.skip-link:focus {
+  top: 0
+}
+
+/* Cabeçalho e navegação */
+.site-header {
+  position: sticky;
+  top: 0;
+  backdrop-filter: saturate(130%) blur(6px);
+  z-index: 9999;
+}
+
+.site-header::after {
+  content: "";
+  display: block;
+  height: 1px;
+  background: rgba(255, 255, 255, .12)
+}
+
+.container {
+  width: min(100% - 2*var(--space), var(--maxw));
+  margin-inline: auto
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: .75rem 0
+}
+
+.chat-launcher {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, .18);
+  cursor: pointer;
+  font-size: 50px;
+}
+
+.chat {
+  position: fixed;
+  right: 16px;
+  bottom: 84px;
+  width: 320px;
+  max-height: 70vh;
+  display: none;
+  flex-direction: column;
+  background: var(--bg);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.chat.open {
+  display: flex
+}
+
+.chat-header {
+  padding: 12px 16px;
+  background: var(--primary);
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chat-close {
+  background: transparent;
+  border: none;
+  color: inherit;
+  font-size: 20px;
+  cursor: pointer
+}
+
+.messages {
+  padding: 12px;
+  gap: 8px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  min-height: 140px;
+  filter: drop-shadow(5px 5px 5px black);
+}
+
+.msg {
+  max-width: 80%;
+  padding: 8px 12px;
+  border-radius: 12px;
+  font-size: 14px;
+  line-height: 1.35
+}
+
+.msg.bot {
+  background: var(--bot);
+  align-self: flex-start
+}
+
+.msg.user {
+  background: var(--user);
+  align-self: flex-end
+}
+
+.quick {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 12px;
+  border-top: 1px solid var(--border)
+}
+
+.quick button {
+  padding: 8px 10px;
+  background: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.footer {
+  display: none;
+  gap: 8px;
+  padding: 12px;
+  border-top: 1px solid var(--border)
+}
+
+.footer input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 10px
+}
+
+.footer button {
+  padding: 10px 14px;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer
+}
+
+.number-phone {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 16px;
+  border: 2px solid #16a34a;
+  border-radius: 9999px;
+  background: transparent;
+  color: #16a34a;
+  font: 600 14px/1.2 system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+  text-decoration: none;
+  transition: background-color .2s, color .2s, border-color .2s, box-shadow .2s, transform .1s;
+}
+
+.number-phone:hover {
+  background: #16a34a;
+  color: #fff;
+}
+
+.number-phone:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(22, 163, 74, .25);
+}
+
+.number-phone:active {
+  transform: translateY(1px);
+}
+
+/* Flutuante no canto inferior direito */
+.btn-float {
+  position: fixed;
+  right: max(16px, env(safe-area-inset-right));
+  bottom: max(16px, env(safe-area-inset-bottom));
+  z-index: 999;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .12);
+}
+
+
+
+.brand {
+  font-weight: 700;
+  letter-spacing: .5px;
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 1.1rem;
+}
+
+/* .logo-float é a logo PROCONVATE */
+.logo-float {
+  position: fixed;
+  /* sempre por cima da interface */
+  top: 18px;
+  /* canto superior esquerdo */
+  left: 20px;
+  z-index: 9999;
+  /* acima de quase tudo */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, .7);
+  /* leve contraste; remova se não quiser */
+  backdrop-filter: blur(4px);
+  /* opcional */
+  pointer-events: none;
+  /* não bloqueia botões/links abaixo */
+}
+
+.logo-float img {
+  display: block;
+}
+
+.site-nav ul {
+  list-style: none;
+  display: flex;
+  gap: .5rem;
+  margin: 0;
+  padding: 0
+}
+
+.site-nav a {
+  display: inline-block;
+  padding: .6rem .9rem;
+  border-radius: 999px;
+  text-decoration: none;
+  color: var(--text);
+  border: 1px solid transparent;
+}
+
+.site-nav a:hover {
+  background: rgba(255, 255, 255, .08)
+}
+
+.site-nav a.active,
+[aria-current="page"] {
+  background: rgba(255, 255, 255, .14);
+  border-color: rgba(255, 255, 255, .2)
+}
+
+.nav-toggle {
+  display: none;
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, .35);
+  color: var(--text);
+  border-radius: 10px;
+  padding: .35rem .5rem;
+  z-index: 9999;
+  top: 20px;
+}
+
+.nav-toggle:focus-visible {
+  outline: 4px solid var(--focus);
+  outline-offset: 2px
+}
+
+/* Main */
+.site-main {
+  padding: clamp(1rem, 2.4vw, 2rem) 0;
+}
+
+.content {
+  background: rgba(255, 255, 255, .04);
+  border: 1px solid rgba(255, 255, 255, .12);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: clamp(1rem, 3vw, 2rem);
+  margin: var(--space) auto;
+  width: min(100% - 2*var(--space), var(--maxw));
+  backdrop-filter: blur(2px);
+}
+
+.content img.logo {
+  width: min(220px, 55vw);
+  height: auto;
+  display: block;
+  margin: 0 200px var(--space) auto;
+  /* top right bottom left */
+  filter: drop-shadow(0 6px 18px rgba(0, 0, 0, .4));
+
+}
+
+
+.logo--livre {
+  position: fixed;
+  /* fora do fluxo da página */
+  top: var(--y, 10px);
+  /* controlável por CSS inline */
+  left: var(--x, 200px);
+  transform: translate(0, 0);
+  /* sem compensação */
+  margin: 0;
+  /* remove centramento herdado */
+  display: block;
+  /* mantém consistência */
+  z-index: 9999;
+  /* sobre tudo */
+  pointer-events: auto;
+  /* clique possível; mude p/ none se decorativa */
+}
+
+.logo--livre.sobre {
+  position: fixed;
+  /* fora do fluxo da página */
+  top: var(--y, 100px);
+  /* controlável por CSS inline */
+  left: var(--x, 550px);
+  transform: translate(0, 0);
+  /* sem compensação */
+  margin: 0;
+  /* remove centramento herdado */
+  display: block;
+  /* mantém consistência */
+  z-index: 9999;
+  /* sobre tudo */
+  pointer-events: auto;
+  /* clique possível; mude p/ none se decorativa */
+  filter: drop-shadow(8px 8px 8px black);
+}
+
+.content img.image-right {
+  width: min(420px, 100%);
+  height: auto;
+  float: right;
+  margin: 0 0 var(--space) var(--space);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.content img.image-right.image-fix {
+  width: 310px;
+  height: auto;
+  float: right;
+  margin: 0 0 var(--space) var(--space);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.content img.image-right.image-terra--fix {
+  width: 300px;
+  height: auto;
+  float: right;
+  margin: 0 0 var(--space) var(--space);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.content p {
+  font-size: var(--p);
+  color: var(--muted);
+  margin: .5rem 0 1rem;
+}
+
+/* Imagens responsivas dentro do conteúdo */
+.content img {
+  max-width: 100%;
+  height: auto
+}
+
+/* Rodapé */
+.site-footer {
+  border-top: 1px solid rgba(255, 255, 255, .12);
+  background: rgba(0, 0, 0, .45);
+  padding: 1.25rem 0;
+}
+
+.site-footer p {
+  margin: .4rem 0;
+  color: var(--muted)
+}
+
+.back-to-top {
+  color: #fff;
+  padding: 10px 15px;
+  background-color: #00a7c7;
+  /* ciano mais forte */
+  border: 2px solid #ffffff;
+  /* borda branca dá contraste */
+  border-radius: 10px;
+  opacity: 100%;
+}
+
+.content,
+img.image-right,
+img.image-left {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 480ms ease, transform 480ms ease;
+  will-change: opacity, transform;
+}
+
+/* Estado revelado */
+.content.show,
+img.image-right.show,
+img.image-left.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Variação opcional: leve slide lateral nas imagens */
+img.image-left {
+  transform: translate(-16px, 16px);
+}
+
+img.image-right {
+  transform: translate(16px, 16px);
+}
+
+img.image-left.show,
+img.image-right.show {
+  transform: translate(0, 0);
+}
+
+/* Layout responsivo para navegação */
+/* Navegação responsiva SEM toggle */
+/* Navegação SEM toggle e SEM empilhar */
+@media (max-width: 720px) {
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
+
+  .site-nav {
+    display: block;
+  }
+
+  .site-nav ul {
+    flex-direction: row;
+    /* ← antes era column */
+    flex-wrap: wrap;
+    gap: .75rem;
+    padding: .5rem 0;
+    justify-content: flex-end;
+    /* opcional, alinha à direita */
+    min-width: 0;
+    width: 100%;
+  }
+
+  .content {
+    text-align: left;
+  }
+
+  .content img.logo {
+    width: min(100px, 55vw);
+    height: auto;
+    display: block;
+    margin: 0 40px var(--space) auto;
+    /* top right bottom left */
+    filter: drop-shadow(0 6px 18px rgba(0, 0, 0, .4));
+  }
+
+
+  .site-nav li {
+    min-width: 0;
+  }
+
+  .site-nav a {
+    white-space: normal;
+    max-width: 100%;
+  }
+
+  .nav-toggle {
+    display: none !important;
+  }
+
+  header,
+  main,
+  fotter,
+  .content,
+  .site-nav {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  img,
+  video {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  pre,
+  code,
+  table {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  [style*="max-width"] {
+    max-width: 100% !important;
+  }
+
+  .content img.image-right {
+    float: none;
+    margin: 0 0 var(--space) 0;
+  }
+
+  .site-nav {
+    transform: translateY(25px);
+  }
+
+  .back-to-top {
+    color: #fff;
+    padding: 10px 15px;
+    background-color: #00a7c7;
+    /* ciano mais forte */
+    border: 2px solid #ffffff;
+    /* borda branca dá contraste */
+    border-radius: 10px;
+    opacity: 100%;
+  }
+
+
+  .logo--livre {
+    width: 110px;
+    left: 50px;
+    top: 10px;
+  }
+
+  .logo--livre.sobre {
+    width: 200px;
+    left: 95px;
+    top: 150px;
+  }
+
+  .logo-float {
+    top: 8px;
+    left: 8px;
+    width: 32px;
+    height: 32px;
+  }
+
+  /* mesmo elemento com as classes active e buttons */
+  .site-nav a.active.button1 {
+    background: rgba(255, 255, 255, .14);
+    border-color: rgba(255, 255, 255, .2);
+    display: inline-block;
+    position: relative;
+    inset: var(--y, 55px) auto auto var(--x, -150px);
+  }
+
+  .site-nav a.active.button2 {
+    background: rgba(255, 255, 255, .14);
+    border-color: rgba(255, 255, 255, .2);
+    display: inline-block;
+    position: relative;
+    inset: var(--y, 55px) auto auto var(--x, -150px);
+  }
+
+  .site-nav a.active.button3 {
+    background: rgba(255, 255, 255, .14);
+    border-color: rgba(255, 255, 255, .2);
+    display: inline-block;
+    position: relative;
+    inset: var(--y, -5px) auto auto var(--x, 10px);
+  }
+
+  .site-nav a.active.button4 {
+    background: rgba(255, 255, 255, .14);
+    border-color: rgba(255, 255, 255, .2);
+    display: inline-block;
+    position: relative;
+    inset: var(--y, -5px) auto auto var(--x, 10px);
+  }
+
+  /* sujeito a mais alterações */
+}
