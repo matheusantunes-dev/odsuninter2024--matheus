@@ -1,493 +1,158 @@
 /* =====================================================
-   PROCONSVATE — global.css
-   • - Estilização de HTMLs:
-   1 - index.html
-   2 - noticas.html
-   3 - proconsvate.html
-   4 - quiz.html
-   5 - sobre.html
-   • - Responsividade para telas menores.
-   • - Organizado para melhor entendimento.
+   PROCONSVATE — global.css (REFATORADO)
+   • Layout responsivo previsível
+   • Sem posicionamentos mágicos
+   • Mobile-first + ajustes por breakpoint
    ===================================================== */
 
-/* Ordem das camadas (da menor prioridade -> maior) */
 @layer base, components, utilities;
 
-/* ----------------------
+/* =========================
    BASE
------------------------*/
+========================= */
 @layer base {
   :root {
     --bg: #0b1a14;
     --surface: #0e2a21;
     --text: #ffffff;
-    --brandhover: #82b0c5;
     --muted: #c7e7db;
-    --muted-1: #c7e7db91;
     --accent: #00b5a8;
-    --backhover: #00000000;
-    --focus: #ffd24a;
+    --brandhover: #82b0c5;
+
     --radius: 14px;
     --shadow: 0 10px 24px rgba(0, 0, 0, .35);
+
     --maxw: 1200px;
     --space: clamp(1rem, 2vw, 2rem);
+
     --h1: clamp(1.6rem, 3.5vw, 2.6rem);
-    --h2: clamp(1.25rem, 2.5vw, 1.75rem);
     --p: clamp(1rem, 1.4vw, 1.1rem);
-    --nav-mt: 2px;
-    --nav-mb: 0;
+
+    --header-h: 72px;
   }
 
   * {
     box-sizing: border-box;
   }
 
-  html {
-    scroll-behavior: smooth;
-  }
-
   body {
-    overflow-x: hidden;
     margin: 0;
-    font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
-    line-height: 1.6;
-    color: var(--text);
-    background-color: var(--bg);
     min-height: 100dvh;
-    /* AQUI fica o fundo + o efeito escuro EXATAMENTE na imagem */
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Arial, sans-serif;
+    color: var(--text);
     background:
-      linear-gradient(180deg, rgba(0, 0, 0, .55), rgba(0, 0, 0, .65)),
-      url("../assets/img/backgroud.webp");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    position: relative;
+      linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,.65)),
+      url("/assets/img/backgroud.webp") center / cover no-repeat fixed;
+    overflow-x: hidden;
   }
 
+  @media (max-width: 1024px) {
+    body {
+      background-attachment: scroll;
+    }
+  }
 
   .container {
     width: min(100% - 2*var(--space), var(--maxw));
     margin-inline: auto;
   }
+}
 
-  /* Header e nav */
+/* =========================
+   HEADER + NAV
+========================= */
+@layer components {
   .site-header {
     position: sticky;
     top: 0;
-    backdrop-filter: saturate(130%) blur(6px);
     z-index: 9999;
-  }
-
-  .site-header::after {
-    content: "";
-    display: block;
-    height: 1px;
-    background: rgba(255, 255, 255, .12);
+    height: var(--header-h);
+    backdrop-filter: saturate(130%) blur(6px);
+    border-bottom: 1px solid rgba(255,255,255,.12);
   }
 
   .header-inner {
+    height: 100%;
+    max-width: var(--maxw);
+    margin-inline: auto;
+    padding: 0 .75rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: .6rem 0;
+    gap: 1rem;
   }
-
 
   .brand {
     font-weight: 700;
-    letter-spacing: .5px;
-    color: var(--muted);
     text-decoration: none;
-    font-size: 1.1rem;
-    filter: drop-shadow(8px 8px 8px black);
-    transition: all .2s !important;
+    color: var(--muted);
+    letter-spacing: .5px;
+    transition: color .2s;
   }
 
   .brand:hover {
     color: var(--brandhover);
-    transition: all .2s !important;
   }
 
   .site-nav ul {
     list-style: none;
     display: flex;
     gap: .5rem;
-    margin: 0;
     padding: 0;
+    margin: 0;
+    flex-wrap: wrap;
   }
 
   .site-nav a {
-    display: inline-block;
-    padding: .6rem .9rem;
+    padding: .45rem .9rem;
     border-radius: 999px;
     text-decoration: none;
     color: var(--text);
     border: 1px solid transparent;
-    margin-top: var(--nav-mt, 0);
-    margin-bottom: var(--nav-mb, 0);
-    line-height: 1.6;
+    transition: background .2s;
+    white-space: nowrap;
   }
 
   .site-nav a:hover {
-    background: rgba(255, 255, 255, .08);
+    background: rgba(255,255,255,.08);
   }
 
   .site-nav a.active,
-  [aria-current="page"] {
-    background: rgba(255, 255, 255, .14);
-    border-color: rgba(255, 255, 255, .2);
+  .site-nav a[aria-current="page"] {
+    background: rgba(255,255,255,.14);
+    border-color: rgba(255,255,255,.2);
   }
 
-  .site-nav a.active.button1 {
-    transition: all .2s !important;
-  }
-
-  .site-nav a.active.button1:hover {
-    background-color: #11111100;
-    transition: all .2s !important;
-  }
-
-  .site-nav a.active.button2 {
-    transition: all .2s !important;
-  }
-
-  .site-nav a.active.button2:hover {
-    background-color: #11111100;
-    transition: all .2s !important;
-  }
-
-  .site-nav a.active.button3 {
-    transition: all .2s !important;
-  }
-
-
-  .site-nav a.active.button3:hover {
-    background-color: #11111100;
-    transition: all .2s !important;
-  }
-
-  .site-nav a.active.button4 {
-    transition: all .2s !important;
-  }
-
-
-  .site-nav a.active.button4:hover {
-    background-color: #11111100;
-    transition: all .2s !important;
-  }
-
-  /* Evita conteúdo escondido atrás do header fixo ao usar #âncoras */
-  [id] {
-    scroll-margin-top: 80px;
-  }
-
-  /* Acessibilidade: reduz motion quando solicitado */
-  @media (prefers-reduced-motion: reduce) {
-    html {
-      scroll-behavior: auto;
+  @media (max-width: 720px) {
+    .site-nav ul {
+      justify-content: center;
     }
 
-    *,
-    *::before,
-    *::after {
-      animation: none !important;
-      transition: none !important;
+    .site-nav a {
+      white-space: normal;
+      font-size: .95rem;
     }
   }
 }
 
-/* ----------------------
-   COMPONENTS
------------------------*/
+/* =========================
+   MAIN / CONTENT
+========================= */
 @layer components {
-
-  /* Logo flutuante */
-  .logo-float {
-    position: fixed;
-    top: 16px;
-    left: 20px;
-    z-index: 9999;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;
-    background: rgba(255, 255, 255, 0);
-    backdrop-filter: blur(4px);
-    pointer-events: none;
-  }
-
-  .logo-float img {
-    display: flex;
-  }
-
-  /* Botão WhatsApp */
-  .number-phone {
-    display: inline-flex;
-    align-items: center;
-    padding: 9px 11px;
-    border-radius: 9999px;
-    background: #16a34a;
-    color: #ffffff;
-    font: 600 40px/1.2 system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
-    text-decoration: none;
-    transition: all .2s !important;
-  }
-
-  .number-phone:hover {
-    background: transparent;
-    color: #00ff5e;
-    transform: translateY(-5px);
-    transition: all .2s !important;
-  }
-
-
-  .number-phone:focus-visible {
-    outline: none;
-    box-shadow: 0 0 0 4px rgba(22, 163, 74, .25);
-  }
-
-  .number-phone:active {
-    transform: translateY(1px);
-  }
-
-  .btn-float {
-    position: fixed;
-    right: max(16px, env(safe-area-inset-right));
-    bottom: max(16px, env(safe-area-inset-bottom));
-    z-index: 999;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.644);
-    transition: all .2s !important;
-  }
-
-  /* Botão Instagram */
-  .insta-btn {
-    position: absolute;
-    bottom: 30px;
-    right: 340px;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #ffffff00;
-    /* ou transparente */
-    border-radius: 50%;
-    text-decoration: none;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    z-index: 9999;
-    transition: background-color .2s, color .2s, border-color .2s, box-shadow .2s, transform .1s;
-  }
-
-  .insta-btn img {
-    width: 65%;
-    /* ajuste como quiser */
-    height: 65%;
-    transition: all .2s !important;
-  }
-
-  .insta-text {
-    position: absolute;
-    bottom: 30px;
-    right: 160px;
-    /* ajusta como quiser */
-    color: #fff;
-    font-weight: bold;
-    z-index: 9999;
-  }
-
-  .insta-btn:hover {
-    background: #ffffff !important;
-    transition: all .2s !important;
-  }
-
-  .email-text {
-    position: absolute;
-    bottom: 30px;
-    right: 400px;
-    /* ajusta como quiser */
-    color: #fff;
-    font-weight: bold;
-    z-index: 9999;
-
-  }
-
-  /* Chat */
-  .chat-launcher {
-    position: fixed;
-    right: 16px;
-    bottom: 16px;
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    background: var(--primary, var(--accent));
-    color: #fff;
-    border: none;
-    box-shadow: 0 8px 18px rgba(0, 0, 0, .18);
-    cursor: pointer;
-    font-size: 32px;
-    z-index: 9999;
-    appearance: none;
-    -webkit-appearance: none;
-    transition: all .2s !important;
-  }
-
-  .chat-launcher.active {
-
-    background: var(--primary, var(---backhover));
-  }
-
-  .chat-launcher:hover {
-    align-items: center;
-    transition: all .2s ease-in-out;
-    background: #00000000;
-    transform: translateY(-5px);
-  }
-
-  .chat {
-    position: fixed;
-    right: 16px;
-    bottom: 84px;
-    width: 320px;
-    max-height: 70vh;
-    display: flex;
-    /* SEM display: none */
-    flex-direction: column;
-    background: var(--bg);
-    border-radius: 16px;
-    box-shadow: var(--shadow);
-    overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, .15);
-    opacity: 0;
-    transform: translateY(16px);
-    /* começa um pouco “pra baixo” */
-    pointer-events: none;
-    /* não clicável fechado */
-    transition: all .2s !important;
-    z-index: 9999;
-  }
-
-  .chat.open {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-    z-index: 9999;
-  }
-
-
-  .chat-header {
-    padding: 12px 16px;
-    background: var(--primary, var(--accent));
-    color: #fff;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-  }
-
-  .chat-close {
-    background: transparent;
-    border: none;
-    color: inherit;
-    font-size: 20px;
-    cursor: pointer;
-    transition: all .2s ease-in-out;
-    z-index: 999999;
-    /* vai funcionar agora */
-    position: relative;
-    /* necessário pra z-index valer */
-  }
-
-  .messages {
-    padding: 12px;
-    gap: 8px;
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-    min-height: 140px;
-    filter: drop-shadow(5px 5px 5px black);
-    white-space: pre-line;
-  }
-
-  .msg {
-    max-width: 80%;
-    padding: 8px 12px;
-    border-radius: 12px;
-    font-size: 14px;
-    line-height: 1.35;
-  }
-
-  .msg.bot {
-    background: var(--bot, rgba(255, 255, 255, .06));
-    align-self: flex-start;
-  }
-
-  .msg.user {
-    background: var(--user, rgba(255, 255, 255, .12));
-    align-self: flex-end;
-    transition: all .2s ease-in-out;
-  }
-
-
-  .quick {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    padding: 12px;
-    border-top: 1px solid rgba(255, 255, 255, .12);
-  }
-
-  .quick button {
-    padding: 8px 10px;
-    background: var(--muted);
-    border: 1px solid rgba(255, 255, 255, .12);
-    border-radius: 999px;
-    font-size: 13px;
-    cursor: pointer;
-  }
-
-  .quick button:hover {
-    background: var(--muted-1);
-    transition: all .2s ease-in-out;
-  }
-
-  .footer {
-    display: none;
-    gap: 8px;
-    padding: 12px;
-    border-top: 1px solid rgba(255, 255, 255, .12);
-  }
-
-  .footer input {
-    flex: 1;
-    padding: 10px;
-    border: 1px solid rgba(255, 255, 255, .12);
-    border-radius: 10px;
-  }
-
-  .footer button {
-    padding: 10px 14px;
-    background: var(--primary, var(--accent));
-    color: #fff;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-  }
-
-  /* Main + conteúdos */
   .site-main {
-    padding: clamp(1rem, 2.4vw, 2rem) 0;
+    padding: var(--space) 0;
+    padding-top: calc(var(--header-h) + var(--space));
   }
 
-  .site-main.pro {
-    padding: clamp(1rem, 2.4vw, 2rem) 0;
+  h1 {
+    font-size: var(--h1);
+    text-align: center;
+    margin-bottom: 1rem;
   }
 
   .content {
-    background: rgba(255, 255, 255, .04);
-    border: 1px solid rgba(255, 255, 255, .12);
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.12);
     border-radius: var(--radius);
     box-shadow: var(--shadow);
     padding: clamp(1rem, 3vw, 2rem);
@@ -499,606 +164,71 @@
   .content p {
     font-size: var(--p);
     color: var(--muted);
-    margin: .5rem 0 1rem;
+    line-height: 1.7;
   }
 
   .content img.logo {
     width: min(220px, 55vw);
-    height: auto;
     display: block;
-    margin: 0 200px var(--space) auto;
-    filter: drop-shadow(8px 6px 18px rgba(0, 0, 0, .485));
-  }
-
-
-  .noticas {
-    background: rgba(0, 0, 0, .45);
-    box-shadow: #000000 10px 10px 10px;
-  }
-
-  .quiz {
-    background: rgba(0, 0, 0, .45);
-    box-shadow: #000000 10px 10px 10px;
-  }
-
-  .logo--livre {
-    position: fixed;
-    top: var(--y, 10px);
-    left: var(--x, 200px);
-    filter: drop-shadow(8px 8px 8px rgba(0, 0, 0, 0.485));
-    transform: translate(0, 0);
-    margin: 0;
-    display: block;
-    z-index: 9999;
-    pointer-events: auto;
-  }
-
-  .logo--livre.sobre {
-    position: absolute !important;
-    top: var(--y, 100px);
-    left: var(--x, 560px);
-    filter: drop-shadow(8px 8px 8px black);
-    z-index: -1 !important;
-
-  }
-
-  .logo--livre.pro {
-    position: relative;
-    top: var(--y, -20px);
-    left: var(--x, 585px);
-    filter: drop-shadow(8px 5px 10px rgb(0, 0, 0));
-    z-index: -1;
-    width: 200px;
-  }
-
-  .content img.image-right,
-  .content img.image-left {
-    width: min(420px, 100%);
-    height: auto;
-    margin: 0 0 var(--space) var(--space);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-  }
-
-  .content img.image-right {
-    float: right;
-  }
-
-  .content img.image-left {
-    float: left;
-    margin: 0 var(--space) var(--space) 0;
-  }
-
-  .content img.image-right.image-fix {
-    width: 310px;
-  }
-
-  .content img.image-right.image-terra--fix {
-    width: 280px;
-  }
-
-  .content img {
-    max-width: 100%;
-    height: auto;
-  }
-
-  /* Iframes (quiz/notícias) */
-  #product-frame {
-    width: min(100% - 2*var(--space), var(--maxw));
-    height: min(85vh, 1200px);
-    display: block;
-    margin-inline: auto;
-    border-radius: var(--radius);
-    border: 1px solid rgba(255, 255, 255, .15);
-    box-shadow: var(--shadow);
-    background: var(--surface);
-  }
-
-  /* Rodapé */
-  .site-footer {
-    border-top: 1px solid rgba(255, 255, 255, .12);
-    background: rgba(0, 0, 0, .45);
-    padding: 1.25rem 0;
-    box-shadow: rgba(0, 0, 0, 0.658) 0 0 10px;
-  }
-
-  .site-footer p {
-    margin: .4rem 0;
-    color: var(--muted);
-  }
-
-  .site-footer.sobre {
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, 80%);
-    position: relative;
-    border-top: 1px solid rgba(255, 255, 255, 0);
-    background: rgba(0, 0, 0, .45);
-    padding: 1rem 0;
-    width: 100%;
-    z-index: 10;
-  }
-
-  .PROCONSVATE {
-    text-align: center;
-    margin: 0 auto;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, 350%);
-    position: relative;
-    border-top: 1px solid rgba(255, 255, 255, 0);
-    background: rgba(0, 0, 0, .45);
-    box-shadow: #000000 0px 0 10px;
-    border-radius: 20px;
-    padding: 1rem 0;
-    width: 100%;
-    position: relative;
-  }
-
-
-  .back-to-top {
-    color: #fff;
-    padding: 5px 10px;
-    background-color: #027e97c9;
-    border: 2px solid #002fff6e;
-    border-radius: 10px;
-    opacity: 1;
-    display: inline-block;
-    text-decoration: none;
-    transition: all .2s !important;
-  }
-
-  p a.back-to-top:hover {
-    background: #027e9754 !important;
-    transition: all .2s !important;
-  }
-
-  /* Página proconsvate.html */
-  .p.pro {
-    border: 5px solid #8f8b8b34;
-    padding: 10px;
-    width: 700px;
-    margin: 20px auto;
-    border-radius: 50px;
-    font-size: 25px;
-    line-height: 1.6;
-    color: var(--text);
-    background-color: #3b3d3c60;
-  }
-
-  .h1.pro {
-    position: relative;
-    margin-top: 40px;
-    margin-bottom: 25px;
-    left: 540px;
-    z-index: 999;
+    margin: 0 auto var(--space);
+    filter: drop-shadow(8px 6px 18px rgba(0,0,0,.45));
   }
 }
 
-/* ----------------------
-   UTILITIES
------------------------*/
-@layer utilities {
+/* =========================
+   LOGO LIVRE
+========================= */
+@layer components {
+  .logo--livre.pro {
+    display: block;
+    width: clamp(110px, 20vw, 220px);
+    margin: 0 auto 1rem;
+    filter: drop-shadow(8px 5px 10px rgba(0,0,0,.6));
+  }
+}
 
-  /* Animação de entrada suave (com fallback para reduced-motion) */
-  .content,
-  img.image-right,
-  img.image-left {
+/* =========================
+   BOTÕES FLUTUANTES
+========================= */
+@layer components {
+  .btn-float {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    z-index: 999;
+  }
+
+  .number-phone {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 14px;
+    border-radius: 999px;
+    background: #16a34a;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    transition: transform .2s, background .2s;
+  }
+
+  .number-phone:hover {
+    background: #0f7a36;
+    transform: translateY(-3px);
+  }
+}
+
+/* =========================
+   UTILITIES
+========================= */
+@layer utilities {
+  .content {
     opacity: 0;
     transform: translateY(16px);
-    transition: opacity 480ms ease, transform 480ms ease;
-    will-change: opacity, transform;
+    transition: opacity .4s ease, transform .4s ease;
   }
 
-  .content.show,
-  img.image-right.show,
-  img.image-left.show {
+  .content.show {
     opacity: 1;
     transform: translateY(0);
-  }
-
-  .ibama {
-    text-decoration: none;
-    padding: 1px;
-    border-radius: 50px;
-    background-color: #027e97c9;
-    border: 2px solid #002fff6e;
-    color: #fff;
-    transition: all .2s !important;
-  }
-
-  .ibama:hover {
-    background: #027e9754 !important;
-    transition: all .2s !important;
-  }
-
-  /* ============================
-     MOBILE (até 720px)
-     → EXATAMENTE seu layout atual
-  ============================= */
-  @media (max-width: 720px) {
-
-    body {
-      overflow-x: hidden;
-      width: 100vw;
-    }
-
-    html {
-      overflow-x: visible;
-      overflow-x: hidden;
-    }
-
-
-
-    .back-to-top {
-      color: #ffffff;
-      padding: 5px 5px;
-      background-color: #027e97c9;
-      border: 2px solid #002fff6e;
-      border-radius: 10px;
-      opacity: 100%;
-      border-style: solid;
-      text-align: center;
-      margin: 0 auto;
-      display: inline-block;
-    }
-
-    .back-to-top:hover {
-      background: #027e9754 !important;
-    }
-
-    .site-header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 10000;
-    }
-
-    .site-header.pro {
-      position: fixed !important;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 1000;
-    }
-
-    .site-main {
-      padding-top: 150px;
-      /* ajusta até ficar certinho */
-    }
-
-    .site-main.pro {
-      padding-top: 150px !important;
-      /* ajusta até ficar certinho */
-    }
-
-    .site-nav {
-      display: block;
-      transform: translateY(25px);
-    }
-
-    .site-nav ul {
-      flex-direction: row;
-      flex-wrap: wrap;
-      gap: .75rem;
-      padding: .5rem 0;
-      justify-content: flex-end;
-      min-width: 0;
-      width: 100%;
-    }
-
-    .site-nav li {
-      min-width: 0;
-    }
-
-    .site-nav a {
-      white-space: normal;
-      max-width: 100%;
-    }
-
-    .header-inner {
-      padding: 0.0005rem 0 !important;
-    }
-
-    .content {
-      text-align: left;
-    }
-
-    .content img.logo {
-      width: min(100px, 55vw);
-      margin: 0 40px var(--space) auto;
-      filter: drop-shadow(8px 8px 8px rgba(0, 0, 0, 0.485));
-    }
-
-    .content img.image-right {
-      float: none;
-      margin: 0 0 var(--space) 0;
-    }
-
-    .logo--livre {
-      width: 110px;
-      left: 50px;
-      top: 10px;
-    }
-
-    .logo--livre.sobre {
-      position: fixed !important;
-      width: 200px;
-      left: 50%;
-      top: 150px;
-      transform: translateX(-50%);
-    }
-
-
-    .logo--livre.pro {
-      position: relative;
-      left: 0;
-      top: 0;
-      z-index: 5;
-      /* qualquer coisa >0 */
-      margin: 0 auto;
-      display: block;
-    }
-
-    .logo-float {
-      top: 45px;
-      left: 160px;
-      width: 32px;
-      height: 32px;
-      background: rgba(0, 0, 0, 0);
-      backdrop-filter: blur(4px);
-    }
-
-    .insta-btn {
-      position: absolute;
-      bottom: 20px;
-      right: 100px;
-      width: 52px;
-      height: 52px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: #ffffff00;
-      /* ou transparente */
-      border-radius: 50%;
-      text-decoration: none;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-      z-index: 9999;
-      transition: all .2s !important;
-    }
-
-    .insta-btn img {
-      width: 65%;
-      /* ajuste como quiser */
-      height: 65%;
-    }
-
-    .insta-text {
-      display: none;
-    }
-
-    .insta-btn.img:hover {
-      background: transparent !important;
-      transition: background-color .2s, color .2s, border-color .2s, box-shadow .2s, transform .1s;
-    }
-
-    .email-text {
-      font-size: 10px;
-      position: absolute;
-      bottom: 1px;
-      right: 80px;
-      /* ajusta como quiser */
-      color: #fff;
-      font-weight: bold;
-      z-index: 1;
-    }
-
-    /* Botões ativos reposicionados (layout atual do projeto) */
-    .site-nav a.active.button1 {
-      position: relative;
-      transform: translate(-170px, 45px);
-      transition: all .2s !important;
-    }
-
-    .site-nav a.active.button1:hover {
-      background-color: #11111100;
-      transition: all .2s !important;
-    }
-
-    .site-nav a.active.button2 {
-      position: relative;
-      inset: var(--y, 45px) auto auto var(--x, -170px);
-      transition: all .2s !important;
-    }
-
-    .site-nav a.active.button2:hover {
-      background-color: #11111100;
-      transition: all .2s !important;
-    }
-
-    .site-nav a.active.button3 {
-      position: relative;
-      inset: var(--y, -16px) auto auto var(--x, -10px);
-      transition: all .2s !important;
-    }
-
-    .site-nav a.active.button3:hover {
-      background-color: #11111100;
-      transition: all .2s !important;
-    }
-
-    .site-nav a.active.button4 {
-      position: relative;
-      inset: var(--y, -16px) auto auto var(--x, -10px);
-      transition: all .2s !important;
-    }
-
-    .site-nav a.active.button4:hover {
-      background-color: #11111100;
-      transition: all .2s !important;
-    }
-
-    .h1.pro {
-      position: relative;
-      margin-top: 40px;
-      margin-bottom: 25px;
-      left: 50px;
-      z-index: 999;
-    }
-
-    .p.pro {
-      padding: 5px;
-      width: 350px;
-      background-color: #3b3d3c60;
-    }
-
-    .PROCONSVATE {
-      display: none;
-    }
-  }
-
-  /* ============================
-     TABLET (721px – 1024px)
-     → mantém a cara do desktop,
-       mas melhora alinhamento e leitura
-  ============================= */
-  @media (min-width: 721px) and (max-width: 1024px) {
-
-    body {
-      overflow-x: hidden;
-    }
-
-    html {
-      overflow-x: visible;
-    }
-
-    /* Logo dentro do conteúdo mais centralizada */
-    .content img.logo {
-      width: min(200px, 45vw);
-      margin: 0 auto var(--space) auto;
-    }
-
-    /* Texto da página proconsvate mais confortável */
-    .p.pro {
-      width: min(650px, 90vw);
-      font-size: 22px;
-    }
-
-    /* Título da página proconsvate centralizado */
-    .h1.pro {
-      position: relative;
-      left: 0;
-      margin-top: 40px;
-      margin-bottom: 25px;
-      text-align: center;
-      z-index: 999;
-    }
-
-    /* Logo livre da página proconsvate mais central */
-    .logo--livre.pro {
-      position: relative;
-      top: -10px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 220px;
-      z-index: 1;
-      margin: 0 auto 10px auto;
-      display: block;
-    }
-
-    /* Evita que imagens flutuadas apertem demais o texto */
-    .content img.image-right,
-    .content img.image-left {
-      float: none;
-      margin: 0 0 var(--space) 0;
-      display: block;
-    }
-
-    #product-frame {
-      height: 70vh;
-    }
-  }
-
-  /* ============================
-     DESKTOP / NOTEBOOK (1025px – 1440px)
-     → Usa o seu layout base (já tá bom)
-     → Só deixei o breakpoint pra futuro ajuste fino
-  ============================= */
-  @media (min-width: 1025px) and (max-width: 1440px) {
-    /* Se um dia notar algo estranho só em notebook,
-       faz o ajuste aqui. Por enquanto, deixa vazio. */
-  }
-
-  /* ============================
-     TELAS GRANDES / TV (1441px+)
-     → Mesma cara, só abre um pouco mais o conteúdo
-  ============================= */
-  @media (min-width: 1441px) {
-
-    :root {
-      /* Container um pouco mais largo pra não ficar
-         “miudinho” no centro da TV */
-      --maxw: 1400px;
-    }
-
-    .content img.image-right,
-    .content img.image-left {
-      width: min(420px, 100%);
-      height: auto;
-      margin: 0 0 var(--space) var(--space);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-
-    .content img.image-right {
-      float: right;
-    }
-
-    .content img.image-left {
-      float: left;
-      width: 280px;
-      margin: 0 var(--space) var(--space) 0;
-    }
-
-    .content img.image-right.image-fix {
-      width: 240px;
-    }
-
-    .content img.image-right.image-terra--fix {
-      width: 235px;
-    }
-
-    .content img {
-      max-width: 100%;
-      height: auto;
-    }
-
-    .logo--livre.pro {
-      position: relative;
-      top: var(--y, -20px);
-      left: var(--x, 650px);
-      filter: drop-shadow(8px 5px 10px rgb(0, 0, 0));
-      z-index: -1;
-      width: 200px;
-    }
-    .logo--livre.sobre {
-      position: absolute !important;
-      top: var(--y, 100px);
-      left: var(--x, 625px);
-      filter: drop-shadow(8px 8px 8px black);
-      z-index: -1 !important;
-    }
-
-    .h1.pro {
-      margin-top: 40px;
-      margin-bottom: 25px;
-      transform: translateX(600px);
-      z-index: 999;
-    }
-
-    .p.pro {
-      width: 800px;
-    }
   }
 }
