@@ -716,389 +716,134 @@
      MOBILE (até 720px)
      → EXATAMENTE seu layout atual
   ============================= */
-  @media (max-width: 720px) {
+  /* =====================================================
+   FIX RESPONSIVO — AJUSTES FINOS
+   ⚠️ NÃO REMOVE NADA ACIMA
+   🎯 Apenas correções de breakpoint
+===================================================== */
 
-    body {
-      overflow-x: hidden;
-      width: 100vw;
-    }
+/* -----------------------------
+   MOBILE PEQUENO (até 360px)
+----------------------------- */
+@media (max-width: 360px) {
 
-    html {
-      overflow-x: visible;
-      overflow-x: hidden;
-    }
-
-
-
-    .back-to-top {
-      color: #ffffff;
-      padding: 5px 5px;
-      background-color: #027e97c9;
-      border: 2px solid #002fff6e;
-      border-radius: 10px;
-      opacity: 100%;
-      border-style: solid;
-      text-align: center;
-      margin: 0 auto;
-      display: inline-block;
-    }
-
-    .back-to-top:hover {
-      background: #027e9754 !important;
-    }
-
-    .site-header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 10000;
-    }
-
-    .site-header.pro {
-      position: fixed !important;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 1000;
-    }
-
-    .site-main {
-      padding-top: 150px;
-      /* ajusta até ficar certinho */
-    }
-
-    .site-main.pro {
-      padding-top: 150px !important;
-      /* ajusta até ficar certinho */
-    }
-
-    .site-nav {
-      display: block;
-      transform: translateY(25px);
-    }
-
-    .site-nav ul {
-      flex-direction: row;
-      flex-wrap: wrap;
-      gap: .75rem;
-      padding: .5rem 0;
-      justify-content: flex-end;
-      min-width: 0;
-      width: 100%;
-    }
-
-    .site-nav li {
-      min-width: 0;
-    }
-
-    .site-nav a {
-      white-space: normal;
-      max-width: 100%;
-    }
-
-    .header-inner {
-      padding: 0.0005rem 0 !important;
-    }
-
-    .content {
-      text-align: left;
-    }
-
-    .content img.logo {
-      width: min(100px, 55vw);
-      margin: 0 40px var(--space) auto;
-      filter: drop-shadow(8px 8px 8px rgba(0, 0, 0, 0.485));
-    }
-
-    .content img.image-right {
-      float: none;
-      margin: 0 0 var(--space) 0;
-    }
-
-    .logo--livre {
-      width: 110px;
-      left: 50px;
-      top: 10px;
-    }
-
-    .logo--livre.sobre {
-      position: fixed !important;
-      width: 200px;
-      left: 50%;
-      top: 150px;
-      transform: translateX(-50%);
-    }
-
-
-    .logo--livre.pro {
-      position: relative;
-      left: 0;
-      top: 0;
-      z-index: 5;
-      /* qualquer coisa >0 */
-      margin: 0 auto;
-      display: block;
-    }
-
-    .logo-float {
-      top: 45px;
-      left: 160px;
-      width: 32px;
-      height: 32px;
-      background: rgba(0, 0, 0, 0);
-      backdrop-filter: blur(4px);
-    }
-
-    .insta-btn {
-      position: absolute;
-      bottom: 20px;
-      right: 100px;
-      width: 52px;
-      height: 52px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: #ffffff00;
-      /* ou transparente */
-      border-radius: 50%;
-      text-decoration: none;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-      z-index: 9999;
-      transition: all .2s !important;
-    }
-
-    .insta-btn img {
-      width: 65%;
-      /* ajuste como quiser */
-      height: 65%;
-    }
-
-    .insta-text {
-      display: none;
-    }
-
-    .insta-btn.img:hover {
-      background: transparent !important;
-      transition: background-color .2s, color .2s, border-color .2s, box-shadow .2s, transform .1s;
-    }
-
-    .email-text {
-      font-size: 10px;
-      position: absolute;
-      bottom: 1px;
-      right: 80px;
-      /* ajusta como quiser */
-      color: #fff;
-      font-weight: bold;
-      z-index: 1;
-    }
-
-    /* Botões ativos reposicionados (layout atual do projeto) */
-    .site-nav a.active.button1 {
-      position: relative;
-      transform: translate(-170px, 45px);
-      transition: all .2s !important;
-    }
-
-    .site-nav a.active.button1:hover {
-      background-color: #11111100;
-      transition: all .2s !important;
-    }
-
-    .site-nav a.active.button2 {
-      position: relative;
-      inset: var(--y, 45px) auto auto var(--x, -170px);
-      transition: all .2s !important;
-    }
-
-    .site-nav a.active.button2:hover {
-      background-color: #11111100;
-      transition: all .2s !important;
-    }
-
-    .site-nav a.active.button3 {
-      position: relative;
-      inset: var(--y, -16px) auto auto var(--x, -10px);
-      transition: all .2s !important;
-    }
-
-    .site-nav a.active.button3:hover {
-      background-color: #11111100;
-      transition: all .2s !important;
-    }
-
-    .site-nav a.active.button4 {
-      position: relative;
-      inset: var(--y, -16px) auto auto var(--x, -10px);
-      transition: all .2s !important;
-    }
-
-    .site-nav a.active.button4:hover {
-      background-color: #11111100;
-      transition: all .2s !important;
-    }
-
-    .h1.pro {
-      position: relative;
-      margin-top: 40px;
-      margin-bottom: 25px;
-      left: 50px;
-      z-index: 999;
-    }
-
-    .p.pro {
-      padding: 5px;
-      width: 350px;
-      background-color: #3b3d3c60;
-    }
-
-    .PROCONSVATE {
-      display: none;
-    }
+  .site-nav ul {
+    justify-content: center;
+    gap: .4rem;
   }
 
-  /* ============================
-     TABLET (721px – 1024px)
-     → mantém a cara do desktop,
-       mas melhora alinhamento e leitura
-  ============================= */
-  @media (min-width: 721px) and (max-width: 1024px) {
-
-    body {
-      overflow-x: hidden;
-    }
-
-    html {
-      overflow-x: visible;
-    }
-
-    /* Logo dentro do conteúdo mais centralizada */
-    .content img.logo {
-      width: min(200px, 45vw);
-      margin: 0 auto var(--space) auto;
-    }
-
-    /* Texto da página proconsvate mais confortável */
-    .p.pro {
-      width: min(650px, 90vw);
-      font-size: 22px;
-    }
-
-    /* Título da página proconsvate centralizado */
-    .h1.pro {
-      position: relative;
-      left: 0;
-      margin-top: 40px;
-      margin-bottom: 25px;
-      text-align: center;
-      z-index: 999;
-    }
-
-    /* Logo livre da página proconsvate mais central */
-    .logo--livre.pro {
-      position: relative;
-      top: -10px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 220px;
-      z-index: 1;
-      margin: 0 auto 10px auto;
-      display: block;
-    }
-
-    /* Evita que imagens flutuadas apertem demais o texto */
-    .content img.image-right,
-    .content img.image-left {
-      float: none;
-      margin: 0 0 var(--space) 0;
-      display: block;
-    }
-
-    #product-frame {
-      height: 70vh;
-    }
+  .site-nav a {
+    padding: .4rem .6rem;
+    font-size: .85rem;
   }
 
-  /* ============================
-     DESKTOP / NOTEBOOK (1025px – 1440px)
-     → Usa o seu layout base (já tá bom)
-     → Só deixei o breakpoint pra futuro ajuste fino
-  ============================= */
-  @media (min-width: 1025px) and (max-width: 1440px) {
-    /* Se um dia notar algo estranho só em notebook,
-       faz o ajuste aqui. Por enquanto, deixa vazio. */
+  .content img.logo {
+    margin: 0 auto var(--space) auto;
   }
 
-  /* ============================
-     TELAS GRANDES / TV (1441px+)
-     → Mesma cara, só abre um pouco mais o conteúdo
-  ============================= */
-  @media (min-width: 1441px) {
+  .logo--livre {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
 
-    :root {
-      /* Container um pouco mais largo pra não ficar
-         “miudinho” no centro da TV */
-      --maxw: 1400px;
-    }
+/* -----------------------------
+   MOBILE MÉDIO (361px – 576px)
+----------------------------- */
+@media (min-width: 361px) and (max-width: 576px) {
 
-    .content img.image-right,
-    .content img.image-left {
-      width: min(420px, 100%);
-      height: auto;
-      margin: 0 0 var(--space) var(--space);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
+  .site-nav ul {
+    justify-content: center;
+  }
 
-    .content img.image-right {
-      float: right;
-    }
+  .site-nav a {
+    font-size: .9rem;
+  }
 
-    .content img.image-left {
-      float: left;
-      width: 280px;
-      margin: 0 var(--space) var(--space) 0;
-    }
+  .logo--livre {
+    left: 50%;
+    transform: translateX(-50%);
+  }
 
-    .content img.image-right.image-fix {
-      width: 240px;
-    }
+  .insta-btn {
+    right: 16px;
+  }
 
-    .content img.image-right.image-terra--fix {
-      width: 235px;
-    }
+  .email-text {
+    display: none;
+  }
+}
 
-    .content img {
-      max-width: 100%;
-      height: auto;
-    }
+/* -----------------------------
+   MOBILE GRANDE / TABLET PEQ
+   (577px – 720px)  👈 AQUI ERA O PIOR
+----------------------------- */
+@media (min-width: 577px) and (max-width: 720px) {
 
-    .logo--livre.pro {
-      position: relative;
-      top: var(--y, -20px);
-      left: var(--x, 650px);
-      filter: drop-shadow(8px 5px 10px rgb(0, 0, 0));
-      z-index: -1;
-      width: 200px;
-    }
-    .logo--livre.sobre {
-      position: absolute !important;
-      top: var(--y, 100px);
-      left: var(--x, 625px);
-      filter: drop-shadow(8px 8px 8px black);
-      z-index: -1 !important;
-    }
+  .site-nav ul {
+    justify-content: center;
+    gap: .6rem;
+  }
 
-    .h1.pro {
-      margin-top: 40px;
-      margin-bottom: 25px;
-      transform: translateX(600px);
-      z-index: 999;
-    }
+  .site-nav a {
+    font-size: .95rem;
+  }
 
-    .p.pro {
-      width: 800px;
-    }
+  /* evita empilhamento estranho */
+  .site-nav a.active.button1,
+  .site-nav a.active.button2,
+  .site-nav a.active.button3,
+  .site-nav a.active.button4 {
+    transform: translate(0, 0);
+  }
+
+  .logo--livre {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+/* -----------------------------
+   TABLET CLÁSSICO
+   (721px – 900px)
+----------------------------- */
+@media (min-width: 721px) and (max-width: 900px) {
+
+  .site-nav ul {
+    gap: .6rem;
+  }
+
+  .content img.logo {
+    margin: 0 auto var(--space) auto;
+  }
+
+  .logo--livre.pro {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+/* -----------------------------
+   NOTEBOOK PEQUENO
+   (901px – 1120px)  👈 print que você mandou
+----------------------------- */
+@media (min-width: 901px) and (max-width: 1120px) {
+
+  .site-nav ul {
+    gap: .4rem;
+  }
+
+  .site-nav a {
+    padding: .5rem .75rem;
+  }
+
+  .h1.pro {
+    left: 0;
+    text-align: center;
+  }
+
+  .logo--livre.pro {
+    left: 50%;
+    transform: translateX(-50%);
   }
 }
