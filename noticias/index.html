@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="../assets/img/logo.png" sizes="32x32" type="image/png" loading="lazy">
+  <title>Notícias sobre Animais</title>
+  <!-- Folha de estilos principal. Mantém as imagens originais, muda só layout. -->
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+  <header class="site-header" role="banner">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="Início PROCONSVATE">PROCONSVATE</a>
+      <img class="logo-float" src="../assets/img/logo.png" width="48" height="48" alt="Logo PROCONSVATE" aria-hidden="true"
+        loading="lazy">
+      <nav id="menu-principal" class="site-nav" aria-label="Menu principal">
+        <ul>
+          <li><a href="/" class="active button1">Início</a></li>
+          <li><a href="/noticias" class="active button2">Notícias</a></li>
+          <li><a href="/quiz" class="active button3">Quiz</a></li>
+          <li><a href="/sobre" class="active button4">Sobre</a></li>
+        </ul>
+      </nav>
+
+    </div>
+  </header>
+  <main id="conteudo-principal" tabindex="-1" class="site-main" role="main">
+
+    <iframe src="https://www.cnnbrasil.com.br/tudo-sobre/animais/" id="product-frame"
+      title="Lista de notícias sobre animais da CNN Brasil" class="noticas"></iframe>
+
+  </main>
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <p><strong>Programa de Conscientização de Vida Aquática e Terrestre (PROCONSVATE)</strong></p>
+      <p>Matheus Antunes Reis © Todos os direitos reservados - Desenvolvido por MR SISTEMAS</p>
+      <p>
+        <a class="back-to-top" href="#topo" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+          Voltar ao topo
+        </a>
+      </p>
+    </div>
+
+    <!-- WhatsApp -->
+    <a href="https://wa.me/5538988064942" class="number-phone btn-float" target="_blank" rel="noopener">
+      <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <!-- Instagram -->
+    <a href="https://www.instagram.com/proconsvate?igsh=MWMwb3ZucWFydmFyMQ==" class="insta-btn" target="_blank"
+      rel="noopener">
+      <img src="../assets/img/insta.png" alt="Instagram" loading="lazy">
+    </a>
+
+    <p class="insta-text">Siga-nos no Instagram!</p>
+    <p class="email-text">proconsvate@gmail.com</p>
+    <script src="../js/index.js" defer></script>
+</body>
+
+</html>
