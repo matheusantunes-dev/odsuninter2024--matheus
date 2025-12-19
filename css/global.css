@@ -716,7 +716,7 @@
      MOBILE (até 720px)
      → EXATAMENTE seu layout atual
   ============================= */
-  @media (max-width: 720px) {
+  @media (min-width: 360px) and (max-width: 405px) {
 
     body {
       overflow-x: hidden;
@@ -727,8 +727,6 @@
       overflow-x: visible;
       overflow-x: hidden;
     }
-
-
 
     .back-to-top {
       color: #ffffff;
@@ -957,149 +955,764 @@
       display: none;
     }
   }
-  
 
-  /* ============================
-     TABLET (721px – 1024px)
-     → mantém a cara do desktop,
-       mas melhora alinhamento e leitura
-  ============================= */
-  @media (min-width: 721px) and (max-width: 1024px) {
+  @media (min-width: 406px) and (max-width: 489px) {
+
 
     body {
       overflow-x: hidden;
+      width: 100vw;
     }
 
     html {
       overflow-x: visible;
+      overflow-x: hidden;
     }
 
-    /* Logo dentro do conteúdo mais centralizada */
+    .back-to-top {
+      color: #ffffff;
+      padding: 5px 5px;
+      background-color: #027e97c9;
+      border: 2px solid #002fff6e;
+      border-radius: 10px;
+      opacity: 100%;
+      border-style: solid;
+      text-align: center;
+      margin: 0 auto;
+      display: inline-block;
+    }
+
+    .back-to-top:hover {
+      background: #027e9754 !important;
+    }
+
+    .site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 10000;
+    }
+
+    .site-header.pro {
+      position: fixed !important;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+    }
+
+    .site-main {
+      padding-top: 150px;
+      /* ajusta até ficar certinho */
+    }
+
+    .site-main.pro {
+      padding-top: 150px !important;
+      /* ajusta até ficar certinho */
+    }
+
+    .site-nav {
+      display: block;
+      transform: translateY(25px);
+    }
+
+    .site-nav ul {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: .75rem;
+      padding: .5rem 0;
+      justify-content: flex-end;
+      min-width: 0;
+      width: 100%;
+    }
+
+    .site-nav li {
+      min-width: 0;
+    }
+
+    .site-nav a {
+      white-space: normal;
+      max-width: 100%;
+    }
+
+    .header-inner {
+      padding: 0.0005rem 0 !important;
+    }
+
+    .content {
+      text-align: left;
+    }
+
     .content img.logo {
-      width: min(200px, 45vw);
-      margin: 0 auto var(--space) auto;
+      width: min(100px, 55vw);
+      margin: 0 40px var(--space) auto;
+      filter: drop-shadow(8px 8px 8px rgba(0, 0, 0, 0.485));
     }
 
-    /* Texto da página proconsvate mais confortável */
-    .p.pro {
-      width: min(650px, 90vw);
-      font-size: 22px;
+    .content img.image-right {
+      float: none;
+      margin: 0 0 var(--space) 0;
     }
 
-    /* Título da página proconsvate centralizado */
-    .h1.pro {
+    .logo--livre {
+      width: 110px;
+      left: 50px;
+      top: 10px;
+    }
+
+    .logo--livre.sobre {
+      position: fixed !important;
+      width: 200px;
+      left: 50%;
+      top: 150px;
+      transform: translateX(-50%);
+    }
+
+
+    .logo--livre.pro {
       position: relative;
       left: 0;
+      top: 0;
+      z-index: 5;
+      /* qualquer coisa >0 */
+      margin: 0 auto;
+      display: block;
+    }
+
+    .logo-float {
+      top: 45px;
+      left: 160px;
+      width: 32px;
+      height: 32px;
+      background: rgba(0, 0, 0, 0);
+      backdrop-filter: blur(4px);
+    }
+
+    .insta-btn {
+      position: absolute;
+      bottom: 20px;
+      right: 100px;
+      width: 52px;
+      height: 52px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #ffffff00;
+      /* ou transparente */
+      border-radius: 50%;
+      text-decoration: none;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      z-index: 9999;
+      transition: all .2s !important;
+    }
+
+    .insta-btn img {
+      width: 65%;
+      /* ajuste como quiser */
+      height: 65%;
+    }
+
+    .insta-text {
+      display: none;
+    }
+
+    .insta-btn.img:hover {
+      background: transparent !important;
+      transition: background-color .2s, color .2s, border-color .2s, box-shadow .2s, transform .1s;
+    }
+
+    .email-text {
+      font-size: 10px;
+      position: absolute;
+      bottom: 1px;
+      right: 80px;
+      /* ajusta como quiser */
+      color: #fff;
+      font-weight: bold;
+      z-index: 1;
+    }
+
+    /* Botões ativos reposicionados (layout atual do projeto) */
+    .site-nav a.active.button1 {
+      position: relative;
+      transform: translate(-170px, 45px);
+      transition: all .2s !important;
+      top: 50%;
+      left: 50%;
+      transform: translate(-200%, 45%);
+    }
+
+    .site-nav a.active.button1:hover {
+      background-color: #11111100;
+      transition: all .2s !important;
+    }
+
+    .site-nav a.active.button2 {
+      position: relative;
+      inset: var(--y, 45px) auto auto var(--x, -170px);
+      transition: all .2s !important;
+      top: 50%;
+      left: 50%;
+      transform: translate(-160%, 45%)
+    }
+
+    .site-nav a.active.button2:hover {
+      background-color: #11111100;
+      transition: all .2s !important;
+    }
+
+    .site-nav a.active.button3 {
+      position: relative;
+      inset: var(--y, -16px) auto auto var(--x, -10px);
+      transition: all .2s !important;
+      top: 50%;
+      left: 50%;
+      transform: translate(-200%, 45%)
+    }
+
+    .site-nav a.active.button3:hover {
+      background-color: #11111100;
+      transition: all .2s !important;
+
+    }
+
+    .site-nav a.active.button4 {
+      position: relative;
+      inset: var(--y, -16px) auto auto var(--x, -10px);
+      transition: all .2s !important;
+    }
+
+    .site-nav a.active.button4:hover {
+      background-color: #11111100;
+      transition: all .2s !important;
+    }
+
+    .h1.pro {
+      position: relative;
       margin-top: 40px;
       margin-bottom: 25px;
-      text-align: center;
+      left: 100px;
       z-index: 999;
     }
 
-    /* Logo livre da página proconsvate mais central */
-    .logo--livre.pro {
-      position: relative;
-      top: -10px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 220px;
-      z-index: 1;
-      margin: 0 auto 10px auto;
-      display: block;
+    .p.pro {
+      padding: 5px;
+      width: 350px;
+      background-color: #3b3d3c60;
     }
 
-    /* Evita que imagens flutuadas apertem demais o texto */
-    .content img.image-right,
-    .content img.image-left {
-      float: none;
-      margin: 0 0 var(--space) 0;
-      display: block;
-    }
-
-    #product-frame {
-      height: 70vh;
+    .PROCONSVATE {
+      display: none;
     }
   }
+}
 
-  /* ============================
+/* ============================
+   FIX: mobile-large / phablet
+   faixa: 500px — 720px
+   Cole este bloco ao final do global.css
+============================ */
+@media (min-width: 500px) and (max-width: 720px) {
+
+  /* ===== Header + ordem dos elementos ===== */
+  .header-inner {
+    display: flex;
+    /* garante flex */
+    flex-direction: column;
+    /* empilha brand / nav verticalmente */
+    align-items: center;
+    /* centraliza horizontalmente */
+    gap: .5rem;
+    /* espaço entre brand e nav */
+    padding: .4rem .5rem;
+    /* evita que o header fique colado na borda */
+  }
+
+  .brand {
+    order: 1;
+    /* primeiro elemento visível */
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+  }
+
+  /* Esconde logo flutuante que pode atrapalhar a largura do header */
+  .logo-float {
+    display: none !important;
+  }
+
+  /* ===== NAV — manter centralizado e sem posições mágicas ===== */
+  .site-nav {
+    order: 2;
+    /* vem depois da brand na coluna */
+    width: 100%;
+    /* ocupa a linha inteira (mas os itens ficam centrados) */
+    transform: none !important;
+    /* remove transform herdado */
+  }
+
+  .site-nav ul {
+    display: flex;
+    /* reaplica flex por segurança */
+    justify-content: center;
+    /* centra os botões */
+    flex-wrap: wrap;
+    /* permite quebra em 2 linhas se necessário */
+    gap: .6rem;
+    /* espaço entre botões */
+    padding: .25rem 0;
+    margin: 0;
+  }
+
+  .site-nav a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: .45rem .85rem;
+    /* aumenta área clicável sem crescer muito */
+    font-size: .95rem;
+    /* tamanho legível nesse range */
+    white-space: normal;
+    /* permite quebra de texto controlada */
+    border-radius: 999px;
+    line-height: 1.2;
+  }
+
+  /* Anula quaisquer posicionamentos individuais de botões que estavam 'empurrando' layout */
+  .site-nav a.active.button1,
+  .site-nav a.active.button2,
+  .site-nav a.active.button3,
+  .site-nav a.active.button4 {
+    position: static !important;
+    transform: none !important;
+    inset: auto !important;
+    left: auto !important;
+    top: auto !important;
+  }
+
+  /* ===== Conteúdo ===== */
+  /* header fixo: compensamos o conteúdo para não ficar escondido */
+  .site-main,
+  .site-main.pro {
+    padding-top: 160px;
+    /* ajusta onde o conteúdo começa (se mudar header, aumenta/diminui) */
+  }
+
+  /* garante logo centrada no conteúdo */
+  .content img.logo {
+    margin: 0 auto var(--space);
+    width: min(140px, 45vw);
+  }
+
+  /* imagens flutuadas viram blocos para evitar quebra de texto */
+  .content img.image-right,
+  .content img.image-left {
+    float: none;
+    margin: 0 0 var(--space) 0;
+    display: block;
+  }
+
+  /* centraliza a "logo--livre" sem usar left fixo */
+  .logo--livre,
+  .logo--livre.pro,
+  .logo--livre.sobre {
+    position: relative;
+    left: auto;
+    transform: none;
+    margin: 0 auto 1rem auto;
+    display: block;
+    width: min(140px, 30vw);
+    z-index: 2;
+  }
+
+  /* botões flutuantes (whatsapp/insta) ajustados para não encobrir nav */
+  .insta-btn {
+    right: 110px !important;
+    bottom: 30px !important;
+  }
+
+  .number-phone {
+    right: 16px !important;
+    bottom: 16px !important;
+  }
+
+  /* textos específicos da página PROCONSVATE ficam legíveis */
+  .h1.pro {
+    left: auto;
+    text-align: center;
+    transform: none;
+  }
+
+  .email-text {
+    font-size: 10px;
+    position: absolute;
+    bottom: 1px;
+    right: 80px;
+    /* ajusta como quiser */
+    color: #fff;
+    font-weight: bold;
+    z-index: 1;
+  }
+
+  .p.pro {
+    width: min(95%, 420px);
+    padding: 10px;
+    font-size: 18px;
+  }
+
+  .PROCONSVATE {
+    display: none;
+  }
+}
+
+
+/* ============================
+     TABLET (721px – 1024px)
+     → mantém a cara do desktop,
+       mas melhora alinhamento e leitura
+  ============================= */
+@media (min-width: 721px) and (max-width: 776px) {
+
+  body {
+    overflow-x: hidden;
+  }
+
+  html {
+    overflow-x: visible;
+  }
+
+  /* Logo dentro do conteúdo mais centralizada */
+  .content img.logo {
+    width: min(140px, 45vw);
+    margin: 0 auto var(--space) auto;
+  }
+
+  /* Texto da página proconsvate mais confortável */
+  .p.pro {
+    width: min(650px, 90vw);
+    font-size: 22px;
+  }
+
+  /* Título da página proconsvate centralizado */
+  .h1.pro {
+    position: relative;
+    left: 0;
+    margin-top: 40px;
+    margin-bottom: 25px;
+    text-align: center;
+    z-index: 999;
+  }
+
+  /* Logo livre da página proconsvate mais central */
+  .logo--livre,
+  .logo--livre.pro {
+    position: relative;
+    left: auto;
+    transform: none;
+    margin: 0 auto 1rem auto;
+    display: block;
+    width: min(140px, 30vw);
+    z-index: 2;
+  }
+
+  .logo--livre.sobre {
+    margin: 0 auto 1rem;
+    width: min(140px, 30vw);
+    z-index: 2;
+    transform: translate(300px, 70px);
+  }
+
+  .logo-float {
+    top: 20px;
+    left: 160px;
+    width: 32px;
+    height: 32px;
+    background: rgba(0, 0, 0, 0);
+    backdrop-filter: blur(4px);
+  }
+
+  /* Evita que imagens flutuadas apertem demais o texto */
+  .content img.image-right,
+  .content img.image-left {
+    float: none;
+    margin: 0 0 var(--space) 0;
+    display: block;
+  }
+
+  .email-text {
+    font-size: 10px;
+    position: absolute;
+    bottom: 1px;
+    right: 160px;
+    /* ajusta como quiser */
+    color: #fff;
+    font-weight: bold;
+    z-index: 1;
+  }
+
+  #product-frame {
+    height: 70vh;
+  }
+}
+
+/* ============================
+     TABLET / tablet grande (777px – 780px)
+     → Usa o seu layout base (já tá bom)
+     → Só deixei o breakpoint pra futuro ajuste fino
+  ============================= */
+@media (min-width: 777px) and (max-width: 1024px) {
+
+  body {
+    overflow-x: hidden;
+  }
+
+  html {
+    overflow-x: visible;
+  }
+
+  /* Logo dentro do conteúdo mais centralizada */
+  .content img.logo {
+    width: min(140px, 45vw);
+    margin: 0 auto var(--space) auto;
+  }
+
+  /* Texto da página proconsvate mais confortável */
+  .p.pro {
+    width: min(650px, 90vw);
+    font-size: 22px;
+  }
+
+  /* Título da página proconsvate centralizado */
+  .h1.pro {
+    position: relative;
+    left: 0;
+    margin-top: 40px;
+    margin-bottom: 25px;
+    text-align: center;
+    z-index: 999;
+  }
+
+  /* Logo livre da página proconsvate mais central */
+  .logo--livre,
+  .logo--livre.pro {
+    position: relative;
+    left: auto;
+    transform: none;
+    margin: 0 auto 1rem auto;
+    display: block;
+    width: min(140px, 30vw);
+    z-index: 2;
+  }
+
+  .logo--livre.sobre {
+    margin: 0 auto 1rem;
+    width: min(140px, 30vw);
+    z-index: 2;
+    transform: translate(300px, 70px);
+  }
+
+  .logo-float {
+    top: 20px;
+    left: 160px;
+    width: 32px;
+    height: 32px;
+    background: rgba(0, 0, 0, 0);
+    backdrop-filter: blur(4px);
+  }
+
+  /* Evita que imagens flutuadas apertem demais o texto */
+  .content img.image-right,
+  .content img.image-left {
+    float: none;
+    margin: 0 0 var(--space) 0;
+    display: block;
+  }
+
+  .email-text {
+    font-size: 10px;
+    position: absolute;
+    bottom: 1px;
+    right: 160px;
+    /* ajusta como quiser */
+    color: #fff;
+    font-weight: bold;
+    z-index: 1;
+  }
+
+  #product-frame {
+    height: 70vh;
+  }
+}
+
+/* ============================
      DESKTOP / NOTEBOOK (1025px – 1440px)
      → Usa o seu layout base (já tá bom)
      → Só deixei o breakpoint pra futuro ajuste fino
   ============================= */
-  @media (min-width: 1025px) and (max-width: 1440px) {
-    /* Se um dia notar algo estranho só em notebook,
-       faz o ajuste aqui. Por enquanto, deixa vazio. */
+@media (min-width: 800px) and (max-width: 1024px) {
+
+  body {
+    overflow-x: hidden;
   }
 
-  /* ============================
+  html {
+    overflow-x: visible;
+  }
+
+  /* Logo dentro do conteúdo mais centralizada */
+  .content img.logo {
+    width: min(140px, 45vw);
+    margin: 0 auto var(--space) auto;
+  }
+
+  /* Texto da página proconsvate mais confortável */
+  .p.pro {
+    width: min(650px, 90vw);
+    font-size: 22px;
+  }
+
+  /* Título da página proconsvate centralizado */
+  .h1.pro {
+    position: relative;
+    left: 0;
+    margin-top: 40px;
+    margin-bottom: 25px;
+    text-align: center;
+    z-index: 999;
+  }
+
+  /* Logo livre da página proconsvate mais central */
+  .logo--livre,
+  .logo--livre.pro {
+    position: relative;
+    left: auto;
+    transform: none;
+    margin: 0 auto 1rem auto;
+    display: block;
+    width: min(140px, 30vw);
+    z-index: 2;
+  }
+
+  .logo--livre.sobre {
+    margin: 0 auto 1rem;
+    width: min(140px, 30vw);
+    z-index: 2;
+    transform: translate(350px, 70px);
+  }
+
+  .logo-float {
+    top: 20px;
+    left: 160px;
+    width: 32px;
+    height: 32px;
+    background: rgba(0, 0, 0, 0);
+    backdrop-filter: blur(4px);
+  }
+
+  /* Evita que imagens flutuadas apertem demais o texto */
+  .content img.image-right,
+  .content img.image-left {
+    float: none;
+    margin: 0 0 var(--space) 0;
+    display: block;
+  }
+
+  .email-text {
+    font-size: 10px;
+    position: absolute;
+    bottom: 1px;
+    right: 160px;
+    /* ajusta como quiser */
+    color: #fff;
+    font-weight: bold;
+    z-index: 1;
+  }
+
+  #product-frame {
+    height: 70vh;
+  }
+}
+
+/* ============================
+     DESKTOP / NOTEBOOK (1025px – 1440px)
+     → Usa o seu layout base (já tá bom)
+     → Só deixei o breakpoint pra futuro ajuste fino
+  ============================= */
+@media (min-width: 1025px) and (max-width: 1440px) {
+  /* Se um dia notar algo estranho só em notebook,
+       faz o ajuste aqui. Por enquanto, deixa vazio. */
+}
+
+/* ============================
      TELAS GRANDES / TV (1441px+)
      → Mesma cara, só abre um pouco mais o conteúdo
   ============================= */
-  @media (min-width: 1441px) {
+@media (min-width: 1441px) {
 
-    :root {
-      /* Container um pouco mais largo pra não ficar
+  :root {
+    /* Container um pouco mais largo pra não ficar
          “miudinho” no centro da TV */
-      --maxw: 1400px;
-    }
+    --maxw: 1400px;
+  }
 
-    .content img.image-right,
-    .content img.image-left {
-      width: min(420px, 100%);
-      height: auto;
-      margin: 0 0 var(--space) var(--space);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
+  .content img.image-right,
+  .content img.image-left {
+    width: min(420px, 100%);
+    height: auto;
+    margin: 0 0 var(--space) var(--space);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
 
-    .content img.image-right {
-      float: right;
-    }
+  .content img.image-right {
+    float: right;
+  }
 
-    .content img.image-left {
-      float: left;
-      width: 280px;
-      margin: 0 var(--space) var(--space) 0;
-    }
+  .content img.image-left {
+    float: left;
+    width: 280px;
+    margin: 0 var(--space) var(--space) 0;
+  }
 
-    .content img.image-right.image-fix {
-      width: 240px;
-    }
+  .content img.image-right.image-fix {
+    width: 240px;
+  }
 
-    .content img.image-right.image-terra--fix {
-      width: 235px;
-    }
+  .content img.image-right.image-terra--fix {
+    width: 235px;
+  }
 
-    .content img {
-      max-width: 100%;
-      height: auto;
-    }
+  .content img {
+    max-width: 100%;
+    height: auto;
+  }
 
-    .logo--livre.pro {
-      position: relative;
-      top: var(--y, -20px);
-      left: var(--x, 650px);
-      filter: drop-shadow(8px 5px 10px rgb(0, 0, 0));
-      z-index: -1;
-      width: 200px;
-    }
-    .logo--livre.sobre {
-      position: absolute !important;
-      top: var(--y, 100px);
-      left: var(--x, 625px);
-      filter: drop-shadow(8px 8px 8px black);
-      z-index: -1 !important;
-    }
+  .logo--livre.pro {
+    position: relative;
+    top: var(--y, -20px);
+    left: var(--x, 650px);
+    filter: drop-shadow(8px 5px 10px rgb(0, 0, 0));
+    z-index: -1;
+    width: 200px;
+  }
 
-    .h1.pro {
-      margin-top: 40px;
-      margin-bottom: 25px;
-      transform: translateX(600px);
-      z-index: 999;
-    }
+  .logo--livre.sobre {
+    position: absolute !important;
+    top: var(--y, 100px);
+    left: var(--x, 625px);
+    filter: drop-shadow(8px 8px 8px black);
+    z-index: -1 !important;
+  }
 
-    .p.pro {
-      width: 800px;
-    }
+  .h1.pro {
+    margin-top: 40px;
+    margin-bottom: 25px;
+    transform: translateX(600px);
+    z-index: 999;
+  }
+
+  .p.pro {
+    width: 800px;
   }
 }
