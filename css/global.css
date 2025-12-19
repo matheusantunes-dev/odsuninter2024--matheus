@@ -582,6 +582,23 @@
     height: auto;
   }
 
+  /* legenda sempre abaixo */
+  .content figure figcaption {
+    clear: both;
+    font-size: 0.85rem;
+    opacity: 0.85;
+  }
+
+  /* se a imagem for à direita → legenda à direita */
+  .content figure:has(img.image-right) figcaption {
+    text-align: right;
+  }
+
+  /* se a imagem for à esquerda → legenda à esquerda */
+  .content figure:has(img.image-left) figcaption {
+    text-align: left;
+  }
+
   /* Iframes (quiz/notícias) */
   #product-frame {
     width: min(100% - 2*var(--space), var(--maxw));
@@ -800,7 +817,7 @@
     }
 
     .content {
-      text-align: left;
+      text-align: initial;
     }
 
     .content img.logo {
@@ -1041,7 +1058,7 @@
     }
 
     .content {
-      text-align: left;
+      text-align: initial;
     }
 
     .content img.logo {
