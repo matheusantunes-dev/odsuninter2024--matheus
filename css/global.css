@@ -1478,7 +1478,7 @@
      → Usa o seu layout base (já tá bom)
      → Só deixei o breakpoint pra futuro ajuste fino
   ============================= */
-@media (min-width: 777px) and (max-width: 1024px) {
+@media (min-width: 777px) and (max-width: 879px) {
 
   body {
     overflow-x: hidden;
@@ -1656,7 +1656,180 @@
      → Usa o seu layout base (já tá bom)
      → Só deixei o breakpoint pra futuro ajuste fino
   ============================= */
+@media (min-width: 1025px) and (max-width: 1320px) {
+
+  body {
+    overflow-x: hidden;
+  }
+
+  html {
+    overflow-x: visible;
+  }
+
+  /* Logo dentro do conteúdo mais centralizada */
+  .content img.logo {
+    width: min(140px, 45vw);
+    margin: 0 auto var(--space) auto;
+  }
+
+  /* Texto da página proconsvate mais confortável */
+  .p.pro {
+    width: min(650px, 90vw);
+    font-size: 22px;
+  }
+
+  /* Título da página proconsvate centralizado */
+  .h1.pro {
+    position: relative;
+    left: 0;
+    margin-top: 40px;
+    margin-bottom: 25px;
+    text-align: center;
+    z-index: 999;
+  }
+
+  /* Logo livre da página proconsvate mais central */
+  .logo--livre,
+  .logo--livre.pro {
+    position: relative;
+    left: auto;
+    transform: none;
+    margin: 0 auto 1rem auto;
+    display: block;
+    width: min(140px, 30vw);
+    z-index: 2;
+  }
+
+  .logo--livre.sobre {
+    margin: 0 auto 1rem;
+    width: min(140px, 30vw);
+    z-index: 2;
+    transform: translate(350px, 70px);
+  }
+
+  .logo-float {
+    top: 20px;
+    left: 200px;
+    width: 32px;
+    height: 32px;
+    background: rgba(0, 0, 0, 0);
+    backdrop-filter: blur(4px);
+  }
+
+  /* Evita que imagens flutuadas apertem demais o texto */
+  .content img.image-right,
+  .content img.image-left {
+    float: none;
+    margin: 0 0 var(--space) 0;
+    display: block;
+  }
+
+  .email-text {
+    font-size: 10px;
+    position: absolute;
+    bottom: 1px;
+    right: 160px;
+    /* ajusta como quiser */
+    color: #fff;
+    font-weight: bold;
+    z-index: 1;
+  }
+
+  #product-frame {
+    height: 70vh;
+  }
+
+  /* Se um dia notar algo estranho só em notebook,
+       faz o ajuste aqui. Por enquanto, deixa vazio. */
+}
+
+/* ============================
+     DESKTOP / NOTEBOOK (1321px – 1440px)
+
+  ============================= */
 @media (min-width: 1025px) and (max-width: 1440px) {
+
+  body {
+    overflow-x: hidden;
+  }
+
+  html {
+    overflow-x: visible;
+  }
+
+  /* Logo dentro do conteúdo mais centralizada */
+  .content img.logo {
+    width: min(140px, 45vw);
+    margin: 0 auto var(--space) auto;
+  }
+
+  /* Texto da página proconsvate mais confortável */
+  .p.pro {
+    width: min(650px, 90vw);
+    font-size: 22px;
+  }
+
+  /* Título da página proconsvate centralizado */
+  .h1.pro {
+    position: relative;
+    left: 0;
+    margin-top: 40px;
+    margin-bottom: 25px;
+    text-align: center;
+    z-index: 999;
+  }
+
+  /* Logo livre da página proconsvate mais central */
+  .logo--livre,
+  .logo--livre.pro {
+    position: relative;
+    left: auto;
+    transform: none;
+    margin: 0 auto 1rem auto;
+    display: block;
+    width: min(140px, 30vw);
+    z-index: 2;
+  }
+
+  .logo--livre.sobre {
+    margin: 0 auto 1rem;
+    width: min(140px, 30vw);
+    z-index: 2;
+    transform: translate(350px, 70px);
+  }
+
+  .logo-float {
+    top: 20px;
+    left: 250px;
+    width: 32px;
+    height: 32px;
+    background: rgba(0, 0, 0, 0);
+    backdrop-filter: blur(4px);
+  }
+
+  /* Evita que imagens flutuadas apertem demais o texto */
+  .content img.image-right,
+  .content img.image-left {
+    float: none;
+    margin: 0 0 var(--space) 0;
+    display: block;
+  }
+
+  .email-text {
+    font-size: 10px;
+    position: absolute;
+    bottom: 1px;
+    right: 160px;
+    /* ajusta como quiser */
+    color: #fff;
+    font-weight: bold;
+    z-index: 1;
+  }
+
+  #product-frame {
+    height: 70vh;
+  }
+
   /* Se um dia notar algo estranho só em notebook,
        faz o ajuste aqui. Por enquanto, deixa vazio. */
 }
