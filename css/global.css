@@ -536,7 +536,7 @@
   .logo--livre.sobre {
     position: absolute !important;
     top: var(--y, 100px);
-    left: var(--x, 560px);
+    left: var(--x, 250px) !important;
     filter: drop-shadow(8px 8px 8px black);
     z-index: -1 !important;
 
@@ -1563,59 +1563,24 @@
 }
 
 /* ============================
-     DESKTOP / NOTEBOOK (1025px – 1440px)
-     → Usa o seu layout base (já tá bom)
-     → Só deixei o breakpoint pra futuro ajuste fino
+     Media 800px
   ============================= */
-@media (min-width: 800px) and (max-width: 1024px) {
 
-  body {
-    overflow-x: hidden;
-  }
+@media (width: 800px) {
 
-  html {
-    overflow-x: visible;
-  }
-
-  /* Logo dentro do conteúdo mais centralizada */
-  .content img.logo {
-    width: min(140px, 45vw);
-    margin: 0 auto var(--space) auto;
-  }
-
-  /* Texto da página proconsvate mais confortável */
-  .p.pro {
-    width: min(650px, 90vw);
-    font-size: 22px;
-  }
-
-  /* Título da página proconsvate centralizado */
-  .h1.pro {
+  /* base comum */
+  .logo--livre {
     position: relative;
-    left: 0;
-    margin-top: 40px;
-    margin-bottom: 25px;
-    text-align: center;
-    z-index: 999;
-  }
-
-  /* Logo livre da página proconsvate mais central */
-  .logo--livre,
-  .logo--livre.pro {
-    position: relative;
-    left: auto;
-    transform: none;
-    margin: 0 auto 1rem auto;
-    display: block;
+    margin: 0 auto 1rem;
     width: min(140px, 30vw);
-    z-index: 2;
   }
 
   .logo--livre.sobre {
-    margin: 0 auto 1rem;
-    width: min(140px, 30vw);
-    z-index: 2;
-    transform: translate(350px, 70px);
+    position: relative !important;
+    top: var(--y, 20px) !important;
+    left: var(--x, 300px) !important;
+    filter: drop-shadow(8px 8px 8px black);
+    z-index: -1 !important;
   }
 
   .logo-float {
@@ -1626,30 +1591,9 @@
     background: rgba(0, 0, 0, 0);
     backdrop-filter: blur(4px);
   }
-
-  /* Evita que imagens flutuadas apertem demais o texto */
-  .content img.image-right,
-  .content img.image-left {
-    float: none;
-    margin: 0 0 var(--space) 0;
-    display: block;
-  }
-
-  .email-text {
-    font-size: 10px;
-    position: absolute;
-    bottom: 1px;
-    right: 160px;
-    /* ajusta como quiser */
-    color: #fff;
-    font-weight: bold;
-    z-index: 1;
-  }
-
-  #product-frame {
-    height: 70vh;
-  }
 }
+
+
 
 /* ============================
      DESKTOP / NOTEBOOK (1025px – 1440px)
