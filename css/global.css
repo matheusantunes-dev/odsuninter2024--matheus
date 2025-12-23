@@ -1,23 +1,20 @@
 /* =====================================================
-   PROCONSVATE — global.css
-   • - Estilização de HTMLs:
-   1 - index.html
-   2 - noticas.html
-   3 - proconsvate.html
-   4 - quiz.html
-   5 - sobre.html
-   • - Responsividade para telas menores.
-   • - Organizado para melhor entendimento.
-   ===================================================== */
+  PROCONSVATE — global.css (REFACTORED)
+  • Estilização de HTMLs: index, noticias, proconsvate, quiz, sobre
+  • Responsividade mobile-first (320px → 4K)
+  • Organizado por layers: base → components → utilities
+  • Eliminado: position hacks, fixed left/top, excessive transforms
+  • Adotado: Flexbox, Grid, natural alignment
+===================================================== */
 
-/* Ordem das camadas (da menor prioridade -> maior) */
 @layer base, components, utilities;
 
-/* ----------------------
-   BASE
------------------------*/
+/* =====================================================
+  BASE LAYER — Reset, vars, fundamentals
+===================================================== */
 @layer base {
   :root {
+    /* Colors */
     --bg: #0b1a14;
     --surface: #0e2a21;
     --text: #ffffff;
@@ -27,15 +24,24 @@
     --accent: #00b5a8;
     --backhover: #00000000;
     --focus: #ffd24a;
+
+    /* Spacing & Layout */
     --radius: 14px;
-    --shadow: 0 10px 24px rgba(0, 0, 0, .35);
+    --shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
     --maxw: 1200px;
     --space: clamp(1rem, 2vw, 2rem);
+
+    /* Typography (fluid) */
     --h1: clamp(1.6rem, 3.5vw, 2.6rem);
     --h2: clamp(1.25rem, 2.5vw, 1.75rem);
     --p: clamp(1rem, 1.4vw, 1.1rem);
+
+    /* Navigation adjustments */
     --nav-mt: 2px;
     --nav-mb: 0;
+
+    /* Header height for scroll-margin calculations */
+    --header-height: 80px;
   }
 
   * {
@@ -47,142 +53,119 @@
   }
 
   body {
-    overflow-x: hidden;
     margin: 0;
-    font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu,
+      "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
     line-height: 1.6;
     color: var(--text);
     background-color: var(--bg);
     min-height: 100dvh;
-    /* AQUI fica o fundo + o efeito escuro EXATAMENTE na imagem */
-    background:
-      linear-gradient(180deg, rgba(0, 0, 0, .55), rgba(0, 0, 0, .65)),
-      url("../assets/img/backgroud.webp");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    position: relative;
+    /* Gradient overlay + background image */
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.55),
+        rgba(0, 0, 0, 0.65)),
+      url("../assets/img/backgroud.webp") center / cover no-repeat fixed;
   }
 
-
   .container {
-    width: min(100% - 2*var(--space), var(--maxw));
+    width: min(100% - 2 * var(--space), var(--maxw));
     margin-inline: auto;
   }
 
-  /* Header e nav */
+  /* ===== HEADER & NAVIGATION ===== */
   .site-header {
     position: sticky;
     top: 0;
     backdrop-filter: saturate(130%) blur(6px);
     z-index: 9999;
-  }
-
-  .site-header::after {
-    content: "";
-    display: block;
-    height: 1px;
-    background: rgba(255, 255, 255, .12);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
   }
 
   .header-inner {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: .6rem 0;
+    padding: 0.6rem var(--space);
+    flex-wrap: wrap;
+    gap: 1rem;
   }
 
+  .site-header.sobre {
+    position: sticky;
+    top: 0;
+
+    backdrop-filter: saturate(130%) blur(6px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+
+    transform: translateY(-224px);
+    /* pequeno */
+    z-index: 9999;
+  }
+
+  .header-inner.sobre {
+    min-height: 64px;
+    padding: 0.6rem var(--space);
+
+    /* NADA de position, top, transform, z-index */
+  }
 
   .brand {
     font-weight: 700;
-    letter-spacing: .5px;
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
     color: var(--muted);
     text-decoration: none;
-    font-size: 1.1rem;
     filter: drop-shadow(8px 8px 8px black);
-    transition: all .2s !important;
+    transition: color 0.2s;
   }
 
   .brand:hover {
     color: var(--brandhover);
-    transition: all .2s !important;
   }
 
   .site-nav ul {
     list-style: none;
     display: flex;
-    gap: .5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
     margin: 0;
     padding: 0;
   }
 
   .site-nav a {
-    display: inline-block;
-    padding: .6rem .9rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.6rem 0.9rem;
     border-radius: 999px;
     text-decoration: none;
     color: var(--text);
     border: 1px solid transparent;
-    margin-top: var(--nav-mt, 0);
-    margin-bottom: var(--nav-mb, 0);
     line-height: 1.6;
+    transition: background-color 0.2s, border-color 0.2s;
   }
 
   .site-nav a:hover {
-    background: rgba(255, 255, 255, .08);
+    background: rgba(255, 255, 255, 0.08);
   }
 
   .site-nav a.active,
   [aria-current="page"] {
-    background: rgba(255, 255, 255, .14);
-    border-color: rgba(255, 255, 255, .2);
+    background: rgba(255, 255, 255, 0.14);
+    border-color: rgba(255, 255, 255, 0.2);
+    transition: background-color 0.2s;
   }
 
-  .site-nav a.active.button1 {
-    transition: all .2s !important;
+  .site-nav a.active:hover {
+    background-color: rgba(17, 17, 17, 0);
   }
 
-  .site-nav a.active.button1:hover {
-    background-color: #11111100;
-    transition: all .2s !important;
-  }
-
-  .site-nav a.active.button2 {
-    transition: all .2s !important;
-  }
-
-  .site-nav a.active.button2:hover {
-    background-color: #11111100;
-    transition: all .2s !important;
-  }
-
-  .site-nav a.active.button3 {
-    transition: all .2s !important;
-  }
-
-
-  .site-nav a.active.button3:hover {
-    background-color: #11111100;
-    transition: all .2s !important;
-  }
-
-  .site-nav a.active.button4 {
-    transition: all .2s !important;
-  }
-
-
-  .site-nav a.active.button4:hover {
-    background-color: #11111100;
-    transition: all .2s !important;
-  }
-
-  /* Evita conteúdo escondido atrás do header fixo ao usar #âncoras */
+  /* Anchor scroll margin to account for fixed header */
   [id] {
-    scroll-margin-top: 80px;
+    scroll-margin-top: var(--header-height);
   }
 
-  /* Acessibilidade: reduz motion quando solicitado */
+  /* ===== ACCESSIBILITY ===== */
   @media (prefers-reduced-motion: reduce) {
     html {
       scroll-behavior: auto;
@@ -197,12 +180,12 @@
   }
 }
 
-/* ----------------------
-   COMPONENTS
------------------------*/
+/* =====================================================
+  COMPONENTS LAYER — Reusable UI elements
+===================================================== */
 @layer components {
 
-  /* Logo flutuante */
+  /* ===== FLOATING LOGO ===== */
   .logo-float {
     position: fixed;
     top: 16px;
@@ -220,101 +203,86 @@
   }
 
   .logo-float img {
-    display: flex;
+    display: block;
+    max-width: 100%;
+    height: auto;
   }
 
-  /* Botão WhatsApp */
+  /* ===== FLOATING BUTTONS CONTAINER ===== */
+  .btn-float {
+    position: fixed;
+    right: max(16px, env(safe-area-inset-right));
+    bottom: max(16px, env(safe-area-inset-bottom));
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-end;
+  }
+
+  /* WhatsApp Button */
   .number-phone {
     display: inline-flex;
     align-items: center;
-    padding: 9px 11px;
+    padding: 11px 11px;
     border-radius: 9999px;
     background: #16a34a;
     color: #ffffff;
-    font: 600 40px/1.2 system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+    font-weight: 600;
+    font-size: 2rem;
     text-decoration: none;
-    transition: all .2s !important;
+    transition: all 0.2s;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.644);
   }
 
   .number-phone:hover {
     background: transparent;
     color: #00ff5e;
     transform: translateY(-5px);
-    transition: all .2s !important;
   }
-
 
   .number-phone:focus-visible {
     outline: none;
-    box-shadow: 0 0 0 4px rgba(22, 163, 74, .25);
+    box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.25);
   }
 
   .number-phone:active {
     transform: translateY(1px);
   }
 
-  .btn-float {
-    position: fixed;
-    right: max(16px, env(safe-area-inset-right));
-    bottom: max(16px, env(safe-area-inset-bottom));
-    z-index: 999;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.644);
-    transition: all .2s !important;
-  }
-
-  /* Botão Instagram */
+  /* Instagram Button */
   .insta-btn {
-    position: absolute;
-    bottom: 30px;
-    right: 340px;
+    position: relative;
     width: 40px;
     height: 40px;
     display: flex;
-    justify-content: center;
     align-items: center;
-    background: #ffffff00;
-    /* ou transparente */
+    justify-content: center;
+    background: transparent;
     border-radius: 50%;
     text-decoration: none;
+    border: none;
+    cursor: pointer;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    z-index: 9999;
-    transition: background-color .2s, color .2s, border-color .2s, box-shadow .2s, transform .1s;
+    transition: background-color 0.2s, transform 0.2s;
   }
 
   .insta-btn img {
     width: 65%;
-    /* ajuste como quiser */
     height: 65%;
-    transition: all .2s !important;
-  }
-
-  .insta-text {
-    position: absolute;
-    bottom: 30px;
-    right: 160px;
-    /* ajusta como quiser */
-    color: #fff;
-    font-weight: bold;
-    z-index: 9999;
+    display: block;
+    transition: all 0.2s;
   }
 
   .insta-btn:hover {
-    background: #ffffff !important;
-    transition: all .2s !important;
+    background: #ffffff;
   }
 
-  .email-text {
-    position: absolute;
-    bottom: 30px;
-    right: 400px;
-    /* ajusta como quiser */
-    color: #fff;
-    font-weight: bold;
-    z-index: 9999;
-
+  .insta-btn:hover img {
+    filter: brightness(0.8);
   }
 
-  /* Chat */
+  /* ===== CHAT WIDGET ===== */
   .chat-launcher {
     position: fixed;
     right: 16px;
@@ -322,27 +290,23 @@
     width: 56px;
     height: 56px;
     border-radius: 50%;
-    background: var(--primary, var(--accent));
+    background: var(--accent);
     color: #fff;
     border: none;
-    box-shadow: 0 8px 18px rgba(0, 0, 0, .18);
-    cursor: pointer;
     font-size: 32px;
-    z-index: 9999;
+    cursor: pointer;
     appearance: none;
     -webkit-appearance: none;
-    transition: all .2s !important;
-  }
-
-  .chat-launcher.active {
-
-    background: var(--primary, var(---backhover));
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+    transition: all 0.2s;
+    z-index: 9998;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .chat-launcher:hover {
-    align-items: center;
-    transition: all .2s ease-in-out;
-    background: #00000000;
+    background: rgba(0, 0, 0, 0);
     transform: translateY(-5px);
   }
 
@@ -353,38 +317,32 @@
     width: 320px;
     max-height: 70vh;
     display: flex;
-    /* SEM display: none */
     flex-direction: column;
     background: var(--bg);
     border-radius: 16px;
     box-shadow: var(--shadow);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, .15);
     opacity: 0;
     transform: translateY(16px);
-    /* começa um pouco “pra baixo” */
     pointer-events: none;
-    /* não clicável fechado */
-    transition: all .2s !important;
-    z-index: 9999;
+    transition: all 0.2s;
+    z-index: 9997;
   }
 
   .chat.open {
     opacity: 1;
     transform: translateY(0);
     pointer-events: auto;
-    z-index: 9999;
   }
-
 
   .chat-header {
     padding: 12px 16px;
-    background: var(--primary, var(--accent));
+    background: var(--accent);
     color: #fff;
     display: flex;
     justify-content: space-between;
     align-items: center;
-
   }
 
   .chat-close {
@@ -393,11 +351,10 @@
     color: inherit;
     font-size: 20px;
     cursor: pointer;
-    transition: all .2s ease-in-out;
-    z-index: 999999;
-    /* vai funcionar agora */
+    padding: 0;
+    transition: all 0.2s;
     position: relative;
-    /* necessário pra z-index valer */
+    z-index: 1;
   }
 
   .messages {
@@ -420,161 +377,109 @@
   }
 
   .msg.bot {
-    background: var(--bot, rgba(255, 255, 255, .06));
+    background: rgba(255, 255, 255, 0.06);
     align-self: flex-start;
   }
 
   .msg.user {
-    background: var(--user, rgba(255, 255, 255, .12));
+    background: rgba(255, 255, 255, 0.12);
     align-self: flex-end;
-    transition: all .2s ease-in-out;
+    transition: all 0.2s;
   }
-
 
   .quick {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
     padding: 12px;
-    border-top: 1px solid rgba(255, 255, 255, .12);
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
   }
 
   .quick button {
     padding: 8px 10px;
     background: var(--muted);
-    border: 1px solid rgba(255, 255, 255, .12);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 999px;
     font-size: 13px;
     cursor: pointer;
+    transition: all 0.2s;
   }
 
   .quick button:hover {
     background: var(--muted-1);
-    transition: all .2s ease-in-out;
   }
 
   .footer {
     display: none;
     gap: 8px;
     padding: 12px;
-    border-top: 1px solid rgba(255, 255, 255, .12);
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
   }
 
   .footer input {
     flex: 1;
     padding: 10px;
-    border: 1px solid rgba(255, 255, 255, .12);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 10px;
   }
 
   .footer button {
     padding: 10px 14px;
-    background: var(--primary, var(--accent));
+    background: var(--accent);
     color: #fff;
     border: none;
     border-radius: 10px;
     cursor: pointer;
   }
 
-  /* Main + conteúdos */
+  /* ===== MAIN CONTENT ===== */
   .site-main {
     padding: clamp(1rem, 2.4vw, 2rem) 0;
-  }
-
-  .site-main.pro {
-    padding: clamp(1rem, 2.4vw, 2rem) 0;
+    /* Leave space for sticky header */
+    padding-top: calc(var(--header-height) + clamp(1rem, 2.4vw, 2rem));
   }
 
   .content {
-    background: rgba(255, 255, 255, .04);
-    border: 1px solid rgba(255, 255, 255, .12);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: var(--radius);
     box-shadow: var(--shadow);
     padding: clamp(1rem, 3vw, 2rem);
     margin: var(--space) auto;
-    width: min(100% - 2*var(--space), var(--maxw));
+    width: min(100% - 2 * var(--space), var(--maxw));
     backdrop-filter: blur(2px);
   }
 
   .content p {
     font-size: var(--p);
     color: var(--muted);
-    margin: .5rem 0 1rem;
+    margin: 0.5rem 0 1rem;
   }
 
+  /* Content Images */
   .content img.logo {
     width: min(220px, 55vw);
     height: auto;
     display: block;
     margin: 0 auto var(--space);
-    filter: drop-shadow(8px 6px 18px rgba(0, 0, 0, .485));
-  }
-
-
-  .noticas {
-    background: rgba(0, 0, 0, .45);
-    box-shadow: #000000 10px 10px 10px;
-  }
-
-  .quiz {
-    background: rgba(0, 0, 0, .45);
-    box-shadow: #000000 10px 10px 10px;
-  }
-
-  .logo--livre {
-    position: fixed;
-    top: var(--y, 10px);
-    left: var(--x, 200px);
-    filter: drop-shadow(8px 8px 8px rgba(0, 0, 0, 0.485));
-    transform: translate(0, 0);
-    margin: 0;
-    display: block;
-    z-index: 9999;
-    pointer-events: auto;
-  }
-
-  .logo--livre.sobre {
-    position: absolute !important;
-    top: var(--y, 100px);
-    left: var(--x, 250px) !important;
-    filter: drop-shadow(8px 8px 8px black);
-    z-index: -1 !important;
-
-  }
-
-  .logo--livre.pro {
-    position: relative;
-    top: var(--y, -20px);
-    left: var(--x, 585px);
-    filter: drop-shadow(8px 5px 10px rgb(0, 0, 0));
-    z-index: -1;
-    width: 200px;
+    filter: drop-shadow(8px 6px 18px rgba(0, 0, 0, 0.485));
   }
 
   .content img.image-right,
   .content img.image-left {
     width: min(420px, 100%);
     height: auto;
-    margin: 0 0 var(--space) var(--space);
+    margin: 0 0 var(--space) 0;
     border-radius: var(--radius);
     box-shadow: var(--shadow);
+    display: block;
   }
 
-  .content img.image-right {
-    float: right;
-  }
-
-  .content img.image-left {
-    float: left;
-    margin: 0 var(--space) var(--space) 0;
-  }
-
-  .content img.image-right.image-fix {
-    width: 310px;
-  }
-
-  .content img.image-right.image-terra--fix {
-    width: 280px;
+  .content figure figcaption {
+    clear: both;
+    font-size: 0.85rem;
+    opacity: 0.85;
+    margin-top: 0.5rem;
   }
 
   .content img {
@@ -582,122 +487,143 @@
     height: auto;
   }
 
-  /* legenda sempre abaixo */
-  .content figure figcaption {
-    clear: both;
-    font-size: 0.85rem;
-    opacity: 0.85;
+  /* Special content boxes */
+  .content.noticias,
+  .content.quiz {
+    background: rgba(0, 0, 0, 0.45);
+    box-shadow: 0 10px 10px #000000;
   }
 
-  /* se a imagem for à direita → legenda à direita */
-  .content figure:has(img.image-right) figcaption {
-    text-align: right;
+  /* ===== DECORATIVE LOGOS ===== */
+  .logo--livre {
+    position: relative;
+    width: min(140px, 30vw);
+    height: auto;
+    display: block;
+    margin: 0 auto 1rem;
+    filter: drop-shadow(8px 8px 8px rgba(0, 0, 0, 0.485));
+    z-index: 2;
   }
 
-  /* se a imagem for à esquerda → legenda à esquerda */
-  .content figure:has(img.image-left) figcaption {
-    text-align: left;
+  .logo--livre.sobre {
+    justify-content: center;
+    top: 500px;
+    width: min(200px, 40vw);
+    z-index: 2;
   }
 
-  /* Iframes (quiz/notícias) */
+  .logo--livre.pro {
+    width: min(200px, 40vw);
+    z-index: 2;
+  }
+
+  /* ===== IFRAME PRODUCTS ===== */
   #product-frame {
-    width: min(100% - 2*var(--space), var(--maxw));
+    width: min(100% - 2 * var(--space), var(--maxw));
     height: min(85vh, 1200px);
     display: block;
     margin-inline: auto;
     border-radius: var(--radius);
-    border: 1px solid rgba(255, 255, 255, .15);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     box-shadow: var(--shadow);
     background: var(--surface);
   }
 
-  /* Rodapé */
+  /* ===== FOOTER ===== */
   .site-footer {
-    border-top: 1px solid rgba(255, 255, 255, .12);
-    background: rgba(0, 0, 0, .45);
-    padding: 1.25rem 0;
-    box-shadow: rgba(0, 0, 0, 0.658) 0 0 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(0, 0, 0, 0.45);
+    padding: 1.25rem var(--space);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.658);
   }
 
   .site-footer p {
-    margin: .4rem 0;
+    margin: 0.4rem 0;
     color: var(--muted);
   }
 
   .site-footer.sobre {
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, 80%);
-    position: relative;
-    border-top: 1px solid rgba(255, 255, 255, 0);
-    background: rgba(0, 0, 0, .45);
-    padding: 1rem 0;
-    width: 100%;
-    z-index: 10;
+    padding: 1rem var(--space);
+    background: rgba(0, 0, 0, 0.45);
+    border-top: none;
   }
 
   .PROCONSVATE {
     text-align: center;
-    margin: 0 auto;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, 350%);
-    position: relative;
-    border-top: 1px solid rgba(255, 255, 255, 0);
-    background: rgba(0, 0, 0, .45);
-    box-shadow: #000000 0px 0 10px;
+    margin: 2rem auto;
+    padding: 1rem var(--space);
+    background: rgba(0, 0, 0, 0.45);
+    box-shadow: 0 0 10px #000000;
     border-radius: 20px;
-    padding: 1rem 0;
     width: 100%;
-    position: relative;
   }
 
-
+  /* ===== UTILITY LINKS ===== */
   .back-to-top {
-    color: #fff;
+    position: sticky;
+    top: 50px;
+
     padding: 5px 10px;
-    background-color: #027e97c9;
-    border: 2px solid #002fff6e;
+    color: #fff;
+    background-color: rgba(2, 126, 151, 0.789);
+    border: 2px solid rgba(0, 47, 255, 0.431);
     border-radius: 10px;
-    opacity: 1;
-    display: inline-block;
     text-decoration: none;
-    transition: all .2s !important;
+
+    transition: all 0.2s;
   }
 
-  p a.back-to-top:hover {
-    background: #027e9754 !important;
-    transition: all .2s !important;
+  .back-to-top-wrapper {
+    display: flex;
+    justify-content: center;
   }
 
-  /* Página proconsvate.html */
-  .p.pro {
-    border: 5px solid #8f8b8b34;
-    padding: 10px;
-    width: 700px;
-    margin: 20px auto;
+
+  .back-to-top:hover {
+    background: rgba(2, 126, 151, 0.329);
+  }
+
+  .ibama {
+    display: inline-block;
+    padding: 1px;
     border-radius: 50px;
-    font-size: 25px;
-    line-height: 1.6;
-    color: var(--text);
-    background-color: #3b3d3c60;
+    background-color: rgba(2, 126, 151, 0.789);
+    border: 2px solid rgba(0, 47, 255, 0.431);
+    color: #fff;
+    text-decoration: none;
+    transition: all 0.2s;
   }
 
+  .ibama:hover {
+    background: rgba(2, 126, 151, 0.329);
+  }
+
+  /* ===== PAGE SPECIFIC STYLES ===== */
   .h1.pro {
-    position: relative;
+    text-align: center;
     margin-top: 40px;
     margin-bottom: 25px;
-    left: 540px;
-    z-index: 999;
+  }
+
+  .p.pro {
+    border: 5px solid rgba(143, 139, 139, 0.206);
+    padding: 10px;
+    margin: 20px auto;
+    border-radius: 50px;
+    font-size: clamp(1.125rem, 4vw, 1.75rem);
+    line-height: 1.6;
+    color: var(--text);
+    background-color: rgba(59, 61, 60, 0.376);
+    width: min(95%, 700px);
   }
 }
 
-/* ----------------------
-   UTILITIES
------------------------*/
+/* =====================================================
+  UTILITIES LAYER — Animations, responsive, helpers
+===================================================== */
 @layer utilities {
 
-  /* Animação de entrada suave (com fallback para reduced-motion) */
+  /* Entrance animation */
   .content,
   img.image-right,
   img.image-left {
@@ -714,256 +640,75 @@
     transform: translateY(0);
   }
 
-  .ibama {
-    text-decoration: none;
-    padding: 1px;
-    border-radius: 50px;
-    background-color: #027e97c9;
-    border: 2px solid #002fff6e;
-    color: #fff;
-    transition: all .2s !important;
-  }
+  /* =====================================================
+    RESPONSIVE: Mobile-First Approach (320px → 4K)
+  ===================================================== */
 
-  .ibama:hover {
-    background: #027e9754 !important;
-    transition: all .2s !important;
-  }
-
-  /* ============================
-     MOBILE (até 720px)
-     → EXATAMENTE seu layout atual
-  ============================= */
-  @media (min-width: 360px) and (max-width: 405px) {
-
-    html,
-    body {
-      overflow-x: hidden !important;
-      width: 100%;
-      max-width: 100%;
-
-    }
-
-    .back-to-top {
-      color: #ffffff;
-      padding: 5px 5px;
-      background-color: #027e97c9;
-      border: 2px solid #002fff6e;
-      border-radius: 10px;
-      opacity: 100%;
-      border-style: solid;
-      text-align: center;
-      margin: 0 auto;
-      display: inline-block;
-    }
-
-    .back-to-top:hover {
-      background: #027e9754 !important;
-    }
-
-    .site-header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 10000;
-    }
-
-    .site-header.pro {
-      position: fixed !important;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 1000;
-    }
-
-    .site-main {
-      padding-top: 150px;
-      /* ajusta até ficar certinho */
-    }
-
-    .site-main.pro {
-      padding-top: 150px !important;
-      /* ajusta até ficar certinho */
-    }
-
-    .site-nav {
-      display: block;
-      transform: translateY(25px);
+  /* ===== SMALL MOBILE (320px – 404px) ===== */
+  @media (max-width: 404px) {
+    .header-inner {
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.4rem var(--space);
     }
 
     .site-nav ul {
-      flex-direction: row;
-      flex-wrap: wrap;
-      gap: .75rem;
-      padding: .5rem 0;
-      justify-content: flex-end;
-      min-width: 0;
       width: 100%;
-    }
-
-    .site-nav li {
-      min-width: 0;
+      justify-content: center;
+      gap: 0.5rem;
     }
 
     .site-nav a {
-      white-space: normal;
-      max-width: 100%;
+      font-size: 0.9rem;
+      padding: 0.5rem 0.75rem;
     }
 
-    .header-inner {
-      padding: 0.0005rem 0 !important;
+    .site-main {
+      padding-top: calc(var(--header-height) + 1rem);
     }
 
     .content {
-      text-align: initial;
+      width: 100%;
+      padding: clamp(1rem, 2vw, 1.5rem);
+      margin: 1rem 0;
     }
 
     .content img.logo {
       width: min(100px, 55vw);
-      margin: 0 40px var(--space) auto;
-      filter: drop-shadow(8px 8px 8px rgba(0, 0, 0, 0.485));
-    }
-
-    .content img.image-right {
-      float: none;
-      margin: 0 0 var(--space) 0;
-    }
-
-    .logo--livre {
-      width: 110px;
-      left: 50px;
-      top: 10px;
-    }
-
-    .logo--livre.sobre {
-      position: fixed !important;
-      width: 200px;
-      left: 50% !important;
-      top: 200px;
-      transform: translateX(-80%);
-    }
-
-
-    .logo--livre.pro {
-      position: relative;
-      left: 0;
-      top: 0;
-      z-index: 5;
-      /* qualquer coisa >0 */
-      margin: 0 auto;
-      display: block;
-    }
-
-    .logo-float {
-      top: 45px;
-      left: 160px;
-      width: 32px;
-      height: 32px;
-      background: rgba(0, 0, 0, 0);
-      backdrop-filter: blur(4px);
-    }
-
-    .insta-btn {
-      position: absolute;
-      bottom: 20px;
-      right: 100px;
-      width: 52px;
-      height: 52px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: #ffffff00;
-      /* ou transparente */
-      border-radius: 50%;
-      text-decoration: none;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-      z-index: 9999;
-      transition: all .2s !important;
-    }
-
-    .insta-btn img {
-      width: 65%;
-      /* ajuste como quiser */
-      height: 65%;
-    }
-
-    .insta-text {
-      display: none;
-    }
-
-    .insta-btn.img:hover {
-      background: transparent !important;
-      transition: background-color .2s, color .2s, border-color .2s, box-shadow .2s, transform .1s;
-    }
-
-    .email-text {
-      font-size: 10px;
-      position: absolute;
-      bottom: 1px;
-      right: 80px;
-      /* ajusta como quiser */
-      color: #fff;
-      font-weight: bold;
-      z-index: 1;
-    }
-
-    /* Botões ativos reposicionados (layout atual do projeto) */
-    .site-nav a.active.button1 {
-      position: relative;
-      transform: translate(-170px, 45px);
-      transition: all .2s !important;
-    }
-
-    .site-nav a.active.button1:hover {
-      background-color: #11111100;
-      transition: all .2s !important;
-    }
-
-    .site-nav a.active.button2 {
-      position: relative;
-      inset: var(--y, 45px) auto auto var(--x, -170px);
-      transition: all .2s !important;
-    }
-
-    .site-nav a.active.button2:hover {
-      background-color: #11111100;
-      transition: all .2s !important;
-    }
-
-    .site-nav a.active.button3 {
-      position: relative;
-      inset: var(--y, -16px) auto auto var(--x, -10px);
-      transition: all .2s !important;
-    }
-
-    .site-nav a.active.button3:hover {
-      background-color: #11111100;
-      transition: all .2s !important;
-    }
-
-    .site-nav a.active.button4 {
-      position: relative;
-      inset: var(--y, -16px) auto auto var(--x, -10px);
-      transition: all .2s !important;
-    }
-
-    .site-nav a.active.button4:hover {
-      background-color: #11111100;
-      transition: all .2s !important;
-    }
-
-    .h1.pro {
-      position: relative;
-      margin-top: 40px;
-      margin-bottom: 25px;
-      left: 50px;
-      z-index: 999;
+      margin: 0 auto 1rem;
     }
 
     .p.pro {
+      width: min(95%, 350px);
+      font-size: 1rem;
       padding: 5px;
-      width: 350px;
-      background-color: #3b3d3c60;
+    }
+
+    .h1.pro {
+      font-size: clamp(1.25rem, 5vw, 1.75rem);
+    }
+
+    .logo--livre {
+      width: min(110px, 25vw);
+      margin: 0 auto 1rem;
+    }
+
+    .logo-float {
+      top: 1px;
+      left: 10px;
+      transform: translate(50px);
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+    }
+
+    .insta-btn {
+      width: 48px;
+      height: 48px;
+      position: fixed;
+      bottom: 80px;
+      right: 16px;
     }
 
     .PROCONSVATE {
@@ -971,880 +716,369 @@
     }
   }
 
-  @media (min-width: 406px) and (max-width: 489px) {
-
-
-    body {
-      overflow-x: hidden;
-      width: 100vw;
-    }
-
-    html {
-      overflow-x: visible;
-      overflow-x: hidden;
-    }
-
-    .back-to-top {
-      color: #ffffff;
-      padding: 5px 5px;
-      background-color: #027e97c9;
-      border: 2px solid #002fff6e;
-      border-radius: 10px;
-      opacity: 100%;
-      border-style: solid;
-      text-align: center;
-      margin: 0 auto;
-      display: inline-block;
-    }
-
-    .back-to-top:hover {
-      background: #027e9754 !important;
-    }
-
-    .site-header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 10000;
-    }
-
-    .site-header.pro {
-      position: fixed !important;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 1000;
-    }
-
-    .site-main {
-      padding-top: 150px;
-      /* ajusta até ficar certinho */
-    }
-
-    .site-main.pro {
-      padding-top: 150px !important;
-      /* ajusta até ficar certinho */
-    }
-
-    .site-nav {
-      display: block;
-      transform: translateY(25px);
-    }
+  /* ===== MEDIUM MOBILE (405px – 489px) ===== */
+  @media (min-width: 405px) and (max-width: 489px) {
+  .site-header.sobre {
+    position: sticky;
+    top: 0;
+    backdrop-filter: saturate(130%) blur(6px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    transform: translateY(-142px);
+    /* pequeno */
+    z-index: 9999;
+  }
 
     .site-nav ul {
-      flex-direction: row;
-      flex-wrap: wrap;
-      gap: .75rem;
-      padding: .5rem 0;
-      justify-content: flex-end;
-      min-width: 0;
       width: 100%;
-    }
-
-    .site-nav li {
-      min-width: 0;
+      justify-content: center;
+      gap: 0.6rem;
     }
 
     .site-nav a {
-      white-space: normal;
-      max-width: 100%;
+      font-size: 0.95rem;
+      padding: 0.55rem 0.8rem;
     }
 
-    .header-inner {
-      padding: 0.0005rem 0 !important;
+    .site-main {
+      padding-top: calc(var(--header-height) + 1rem);
     }
 
     .content {
-      text-align: initial;
+      width: 100%;
+      padding: 1rem;
+      margin: 1rem 0;
     }
 
     .content img.logo {
-      width: min(100px, 55vw);
-      margin: 0 40px var(--space) auto;
-      filter: drop-shadow(8px 8px 8px rgba(0, 0, 0, 0.485));
-    }
-
-    .content img.image-right {
-      float: none;
-      margin: 0 0 var(--space) 0;
-    }
-
-    .logo--livre {
-      width: 110px;
-      left: 50px;
-      top: 10px;
-    }
-
-    .logo--livre.sobre {
-      position: fixed !important;
-      width: 200px;
-      left: 50%;
-      top: 150px;
-      transform: translateX(-50%);
-    }
-
-
-    .logo--livre.pro {
-      position: relative;
-      left: 0;
-      top: 0;
-      z-index: 5;
-      /* qualquer coisa >0 */
-      margin: 0 auto;
-      display: block;
-    }
-
-    .logo-float {
-      top: 45px;
-      left: 160px;
-      width: 32px;
-      height: 32px;
-      background: rgba(0, 0, 0, 0);
-      backdrop-filter: blur(4px);
-    }
-
-    .insta-btn {
-      position: absolute;
-      bottom: 20px;
-      right: 100px;
-      width: 52px;
-      height: 52px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: #ffffff00;
-      /* ou transparente */
-      border-radius: 50%;
-      text-decoration: none;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-      z-index: 9999;
-      transition: all .2s !important;
-    }
-
-    .insta-btn img {
-      width: 65%;
-      /* ajuste como quiser */
-      height: 65%;
-    }
-
-    .insta-text {
-      display: none;
-    }
-
-    .insta-btn.img:hover {
-      background: transparent !important;
-      transition: background-color .2s, color .2s, border-color .2s, box-shadow .2s, transform .1s;
-    }
-
-    .email-text {
-      font-size: 10px;
-      position: absolute;
-      bottom: 1px;
-      right: 80px;
-      /* ajusta como quiser */
-      color: #fff;
-      font-weight: bold;
-      z-index: 1;
-    }
-
-    /* Botões ativos reposicionados (layout atual do projeto) */
-    .site-nav a.active.button1 {
-      position: relative;
-      transform: translate(-170px, 45px);
-      transition: all .2s !important;
-      top: 50%;
-      left: 50%;
-      transform: translate(-200%, 45%);
-    }
-
-    .site-nav a.active.button1:hover {
-      background-color: #11111100;
-      transition: all .2s !important;
-    }
-
-    .site-nav a.active.button2 {
-      position: relative;
-      inset: var(--y, 45px) auto auto var(--x, -170px);
-      transition: all .2s !important;
-      top: 50%;
-      left: 50%;
-      transform: translate(-160%, 45%)
-    }
-
-    .site-nav a.active.button2:hover {
-      background-color: #11111100;
-      transition: all .2s !important;
-    }
-
-    .site-nav a.active.button3 {
-      position: relative;
-      inset: var(--y, -16px) auto auto var(--x, -10px);
-      transition: all .2s !important;
-      top: 50%;
-      left: 50%;
-      transform: translate(-200%, 45%)
-    }
-
-    .site-nav a.active.button3:hover {
-      background-color: #11111100;
-      transition: all .2s !important;
-
-    }
-
-    .site-nav a.active.button4 {
-      position: relative;
-      inset: var(--y, -16px) auto auto var(--x, -10px);
-      transition: all .2s !important;
-    }
-
-    .site-nav a.active.button4:hover {
-      background-color: #11111100;
-      transition: all .2s !important;
-    }
-
-    .h1.pro {
-      position: relative;
-      margin-top: 40px;
-      margin-bottom: 25px;
-      left: 100px;
-      z-index: 999;
+      width: min(120px, 55vw);
+      margin: 0 auto 1rem;
     }
 
     .p.pro {
-      padding: 5px;
-      width: 350px;
-      background-color: #3b3d3c60;
+      width: min(95%, 380px);
+      font-size: 1.05rem;
+    }
+
+    .h1.pro {
+      font-size: clamp(1.35rem, 5vw, 1.85rem);
+    }
+
+    .logo--livre {
+      display: block;
+      /* 🔥 ESSENCIAL */
+      margin-inline: auto;
+      /* centraliza */
+      width: min(140px, 30vw);
+    }
+
+    .logo-float {
+      top: 1px;
+      left: 80px;
+      transform: translate(90px);
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
     }
 
     .PROCONSVATE {
       display: none;
     }
   }
-}
-
-/* ============================
-   FIX: mobile-large / phablet
-   faixa: 500px — 720px
-   Cole este bloco ao final do global.css
-============================ */
-@media (min-width: 500px) and (max-width: 720px) {
-
-  /* ===== Header + ordem dos elementos ===== */
-  .header-inner {
-    display: flex;
-    /* garante flex */
-    flex-direction: column;
-    /* empilha brand / nav verticalmente */
-    align-items: center;
-    /* centraliza horizontalmente */
-    gap: .5rem;
-    /* espaço entre brand e nav */
-    padding: .4rem .5rem;
-    /* evita que o header fique colado na borda */
-  }
-
-  .brand {
-    order: 1;
-    /* primeiro elemento visível */
-    display: inline-flex;
-    align-items: center;
-    gap: .5rem;
-  }
-
-  /* Esconde logo flutuante que pode atrapalhar a largura do header */
-  .logo-float {
-    display: none !important;
-  }
-
-  /* ===== NAV — manter centralizado e sem posições mágicas ===== */
-  .site-nav {
-    order: 2;
-    /* vem depois da brand na coluna */
-    width: 100%;
-    /* ocupa a linha inteira (mas os itens ficam centrados) */
-    transform: none !important;
-    /* remove transform herdado */
-  }
-
-  .site-nav ul {
-    display: flex;
-    /* reaplica flex por segurança */
-    justify-content: center;
-    /* centra os botões */
-    flex-wrap: wrap;
-    /* permite quebra em 2 linhas se necessário */
-    gap: .6rem;
-    /* espaço entre botões */
-    padding: .25rem 0;
-    margin: 0;
-  }
-
-  .site-nav a {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: .45rem .85rem;
-    /* aumenta área clicável sem crescer muito */
-    font-size: .95rem;
-    /* tamanho legível nesse range */
-    white-space: normal;
-    /* permite quebra de texto controlada */
-    border-radius: 999px;
-    line-height: 1.2;
-  }
-
-  /* Anula quaisquer posicionamentos individuais de botões que estavam 'empurrando' layout */
-  .site-nav a.active.button1,
-  .site-nav a.active.button2,
-  .site-nav a.active.button3,
-  .site-nav a.active.button4 {
-    position: static !important;
-    transform: none !important;
-    inset: auto !important;
-    left: auto !important;
-    top: auto !important;
-  }
-
-  /* ===== Conteúdo ===== */
-  /* header fixo: compensamos o conteúdo para não ficar escondido */
-  .site-main,
-  .site-main.pro {
-    padding-top: 160px;
-    /* ajusta onde o conteúdo começa (se mudar header, aumenta/diminui) */
-  }
-
-  /* garante logo centrada no conteúdo */
-  .content img.logo {
-    margin: 0 auto var(--space);
-    width: min(140px, 45vw);
-  }
-
-  /* imagens flutuadas viram blocos para evitar quebra de texto */
-  .content img.image-right,
-  .content img.image-left {
-    float: none;
-    margin: 0 0 var(--space) 0;
-    display: block;
-  }
-
-  /* centraliza a "logo--livre" sem usar left fixo */
-  .logo--livre,
-  .logo--livre.pro,
-  .logo--livre.sobre {
-    position: relative;
-    left: auto;
-    transform: none;
-    margin: 0 auto 1rem auto;
-    display: block;
-    width: min(140px, 30vw);
-    z-index: 2;
-  }
-
-  /* botões flutuantes (whatsapp/insta) ajustados para não encobrir nav */
-  .insta-btn {
-    right: 110px !important;
-    bottom: 30px !important;
-  }
-
-  .number-phone {
-    right: 16px !important;
-    bottom: 16px !important;
-  }
-
-  /* textos específicos da página PROCONSVATE ficam legíveis */
-  .h1.pro {
-    left: auto;
-    text-align: center;
-    transform: none;
-  }
-
-  .email-text {
-    font-size: 10px;
-    position: absolute;
-    bottom: 1px;
-    right: 80px;
-    /* ajusta como quiser */
-    color: #fff;
-    font-weight: bold;
-    z-index: 1;
-  }
-
-  .p.pro {
-    width: min(95%, 420px);
-    padding: 10px;
-    font-size: 18px;
-  }
-
-  .PROCONSVATE {
-    display: none;
-  }
-}
-
-
-/* ============================
-     TABLET (721px – 1024px)
-     → mantém a cara do desktop,
-       mas melhora alinhamento e leitura
-  ============================= */
-@media (min-width: 721px) and (max-width: 776px) {
-
-  body {
-    overflow-x: hidden;
-  }
-
-  html {
-    overflow-x: visible;
-  }
-
-  /* Logo dentro do conteúdo mais centralizada */
-  .content img.logo {
-    width: min(140px, 45vw);
-    margin: 0 auto var(--space) auto;
-  }
-
-  /* Texto da página proconsvate mais confortável */
-  .p.pro {
-    width: min(650px, 90vw);
-    font-size: 22px;
-  }
-
-  /* Título da página proconsvate centralizado */
-  .h1.pro {
-    position: relative;
-    left: 0;
-    margin-top: 40px;
-    margin-bottom: 25px;
-    text-align: center;
-    z-index: 999;
-  }
-
-  /* Logo livre da página proconsvate mais central */
-  .logo--livre,
-  .logo--livre.pro {
-    position: relative;
-    left: auto;
-    transform: none;
-    margin: 0 auto 1rem auto;
-    display: block;
-    width: min(140px, 30vw);
-    z-index: 2;
-  }
-
-  .logo--livre.sobre {
-    margin: 0 auto 1rem;
-    width: min(140px, 30vw);
-    z-index: 2;
-    transform: translate(300px, 70px);
-  }
-
-  .logo-float {
-    top: 20px;
-    left: 160px;
-    width: 32px;
-    height: 32px;
-    background: rgba(0, 0, 0, 0);
-    backdrop-filter: blur(4px);
-  }
-
-  /* Evita que imagens flutuadas apertem demais o texto */
-  .content img.image-right,
-  .content img.image-left {
-    float: none;
-    margin: 0 0 var(--space) 0;
-    display: block;
-  }
-
-  .email-text {
-    font-size: 10px;
-    position: absolute;
-    bottom: 1px;
-    right: 160px;
-    /* ajusta como quiser */
-    color: #fff;
-    font-weight: bold;
-    z-index: 1;
-  }
-
-  #product-frame {
-    height: 70vh;
-  }
-}
-
-/* ============================
-     TABLET / tablet grande (777px – 780px)
-     → Usa o seu layout base (já tá bom)
-     → Só deixei o breakpoint pra futuro ajuste fino
-  ============================= */
-@media (min-width: 777px) and (max-width: 879px) {
-
-  body {
-    overflow-x: hidden;
-  }
-
-  html {
-    overflow-x: visible;
-  }
-
-  /* Logo dentro do conteúdo mais centralizada */
-  .content img.logo {
-    width: min(140px, 45vw);
-    margin: 0 auto var(--space) auto;
-  }
-
-  /* Texto da página proconsvate mais confortável */
-  .p.pro {
-    width: min(650px, 90vw);
-    font-size: 22px;
-  }
-
-  /* Título da página proconsvate centralizado */
-  .h1.pro {
-    position: relative;
-    left: 0;
-    margin-top: 40px;
-    margin-bottom: 25px;
-    text-align: center;
-    z-index: 999;
-  }
-
-  /* Logo livre da página proconsvate mais central */
-  .logo--livre,
-  .logo--livre.pro {
-    position: relative;
-    left: auto;
-    transform: none;
-    margin: 0 auto 1rem auto;
-    display: block;
-    width: min(140px, 30vw);
-    z-index: 2;
-  }
-
-  .logo--livre.sobre {
-    margin: 0 auto 1rem;
-    width: min(140px, 30vw);
-    z-index: 2;
-    transform: translate(300px, 70px);
-  }
-
-  .logo-float {
-    top: 20px;
-    left: 160px;
-    width: 32px;
-    height: 32px;
-    background: rgba(0, 0, 0, 0);
-    backdrop-filter: blur(4px);
-  }
-
-  /* Evita que imagens flutuadas apertem demais o texto */
-  .content img.image-right,
-  .content img.image-left {
-    float: none;
-    margin: 0 0 var(--space) 0;
-    display: block;
-  }
-
-  .email-text {
-    font-size: 10px;
-    position: absolute;
-    bottom: 1px;
-    right: 160px;
-    /* ajusta como quiser */
-    color: #fff;
-    font-weight: bold;
-    z-index: 1;
-  }
-
-  #product-frame {
-    height: 70vh;
-  }
-}
-
-/* ============================
-     Media 800px
-  ============================= */
-
-@media (width: 800px) {
-
-  /* base comum */
-  .logo--livre {
-    position: relative;
-    margin: 0 auto 1rem;
-    width: min(140px, 30vw);
-  }
-
-  .logo--livre.sobre {
-    position: relative !important;
-    top: var(--y, 20px) !important;
-    left: var(--x, 300px) !important;
-    filter: drop-shadow(8px 8px 8px black);
-    z-index: -1 !important;
-  }
-
-  .logo-float {
-    top: 20px;
-    left: 160px;
-    width: 32px;
-    height: 32px;
-    background: rgba(0, 0, 0, 0);
-    backdrop-filter: blur(4px);
-  }
-}
-
-
-
-/* ============================
-     DESKTOP / NOTEBOOK (1025px – 1440px)
-     → Usa o seu layout base (já tá bom)
-     → Só deixei o breakpoint pra futuro ajuste fino
-  ============================= */
-@media (min-width: 1025px) and (max-width: 1320px) {
-
-  body {
-    overflow-x: hidden;
-  }
-
-  html {
-    overflow-x: visible;
-  }
-
-  /* Logo dentro do conteúdo mais centralizada */
-  .content img.logo {
-    width: min(140px, 45vw);
-    margin: 0 auto var(--space) auto;
-  }
-
-  /* Texto da página proconsvate mais confortável */
-  .p.pro {
-    width: min(650px, 90vw);
-    font-size: 22px;
-  }
-
-  /* Título da página proconsvate centralizado */
-  .h1.pro {
-    position: relative;
-    left: 0;
-    margin-top: 40px;
-    margin-bottom: 25px;
-    text-align: center;
-    z-index: 999;
-  }
-
-  /* Logo livre da página proconsvate mais central */
-  .logo--livre,
-  .logo--livre.pro {
-    position: relative;
-    left: auto;
-    transform: none;
-    margin: 0 auto 1rem auto;
-    display: block;
-    width: min(140px, 30vw);
-    z-index: 2;
-  }
-
-  .logo--livre.sobre {
-    margin: 0 auto 1rem;
-    width: min(140px, 30vw);
-    z-index: 2;
-    transform: translate(350px, 70px);
-  }
-
-  .logo-float {
-    top: 20px;
-    left: 200px;
-    width: 32px;
-    height: 32px;
-    background: rgba(0, 0, 0, 0);
-    backdrop-filter: blur(4px);
-  }
-
-  /* Evita que imagens flutuadas apertem demais o texto */
-  .content img.image-right,
-  .content img.image-left {
-    float: none;
-    margin: 0 0 var(--space) 0;
-    display: block;
-  }
-
-  .email-text {
-    font-size: 10px;
-    position: absolute;
-    bottom: 1px;
-    right: 160px;
-    /* ajusta como quiser */
-    color: #fff;
-    font-weight: bold;
-    z-index: 1;
-  }
-
-  #product-frame {
-    height: 70vh;
-  }
-
-  /* Se um dia notar algo estranho só em notebook,
-       faz o ajuste aqui. Por enquanto, deixa vazio. */
-}
-
-/* ============================
-     DESKTOP / NOTEBOOK (1321px – 1440px)
-
-  ============================= */
-@media (min-width: 1025px) and (max-width: 1440px) {
-
-  body {
-    overflow-x: hidden;
-  }
-
-  html {
-    overflow-x: visible;
-  }
-
-  /* Logo dentro do conteúdo mais centralizada */
-  .content img.logo {
-    width: min(140px, 45vw);
-    margin: 0 auto var(--space) auto;
-  }
-
-  /* Texto da página proconsvate mais confortável */
-  .p.pro {
-    width: min(650px, 90vw);
-    font-size: 22px;
-  }
-
-  /* Título da página proconsvate centralizado */
-  .h1.pro {
-    position: relative;
-    left: 0;
-    margin-top: 40px;
-    margin-bottom: 25px;
-    text-align: center;
-    z-index: 999;
-  }
-
-  /* Logo livre da página proconsvate mais central */
-  .logo--livre,
-  .logo--livre.pro {
-    position: relative;
-    left: auto;
-    transform: none;
-    margin: 0 auto 1rem auto;
-    display: block;
-    width: min(140px, 30vw);
-    z-index: 2;
-  }
-
-  .logo--livre.sobre {
-    margin: 0 auto 1rem;
-    width: min(140px, 30vw);
-    z-index: 2;
-    transform: translate(350px, 70px);
-  }
-
-  .logo-float {
-    top: 20px;
-    left: 250px;
-    width: 32px;
-    height: 32px;
-    background: rgba(0, 0, 0, 0);
-    backdrop-filter: blur(4px);
-  }
-
-  /* Evita que imagens flutuadas apertem demais o texto */
-  .content img.image-right,
-  .content img.image-left {
-    float: none;
-    margin: 0 0 var(--space) 0;
-    display: block;
-  }
-
-  .email-text {
-    font-size: 10px;
-    position: absolute;
-    bottom: 1px;
-    right: 160px;
-    /* ajusta como quiser */
-    color: #fff;
-    font-weight: bold;
-    z-index: 1;
-  }
-
-  #product-frame {
-    height: 70vh;
-  }
-
-  /* Se um dia notar algo estranho só em notebook,
-       faz o ajuste aqui. Por enquanto, deixa vazio. */
-}
-
-/* ============================
-     TELAS GRANDES / TV (1441px+)
-     → Mesma cara, só abre um pouco mais o conteúdo
-  ============================= */
-@media (min-width: 1441px) {
-
-  :root {
-    /* Container um pouco mais largo pra não ficar
-         “miudinho” no centro da TV */
-    --maxw: 1400px;
-  }
-
-  .content img.image-right,
-  .content img.image-left {
-    width: min(420px, 100%);
-    height: auto;
-    margin: 0 0 var(--space) var(--space);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-  }
-
-  .content img.image-right {
-    float: right;
-  }
-
-  .content img.image-left {
-    float: left;
-    width: 280px;
-    margin: 0 var(--space) var(--space) 0;
-  }
-
-  .content img.image-right.image-fix {
-    width: 240px;
-  }
-
-  .content img.image-right.image-terra--fix {
-    width: 235px;
-  }
-
-  .content img {
-    max-width: 100%;
-    height: auto;
-  }
-
-  .logo--livre.pro {
-    position: relative;
-    top: var(--y, -20px);
-    left: var(--x, 650px);
-    filter: drop-shadow(8px 5px 10px rgb(0, 0, 0));
-    z-index: -1;
-    width: 200px;
-  }
-
-  .logo--livre.sobre {
-    position: absolute !important;
-    top: var(--y, 100px);
-    left: var(--x, 625px);
-    filter: drop-shadow(8px 8px 8px black);
-    z-index: -1 !important;
-  }
-
-  .h1.pro {
-    margin-top: 40px;
-    margin-bottom: 25px;
-    transform: translateX(600px);
-    z-index: 999;
-  }
 
-  .p.pro {
-    width: 800px;
+  /* ===== PHABLET (490px – 599px) ===== */
+  @media (min-width: 490px) and (max-width: 599px) {
+    .header-inner {
+      padding: 0.5rem var(--space);
+      gap: 0.75rem;
+    }
+
+    .site-nav ul {
+      justify-content: center;
+      gap: 0.65rem;
+    }
+
+    .site-nav a {
+      font-size: 0.95rem;
+      padding: 0.55rem 0.85rem;
+    }
+
+    .site-main {
+      padding-top: calc(var(--header-height) + 1rem);
+    }
+
+    .content img.logo {
+      width: min(140px, 45vw);
+    }
+
+    .content {
+      padding: 1.25rem;
+    }
+
+    .p.pro {
+      width: min(95%, 420px);
+      font-size: 1.1rem;
+    }
+
+    .logo--livre {
+      display: block;
+      /* 🔥 ESSENCIAL */
+      margin-inline: auto;
+      /* centraliza */
+      width: min(140px, 30vw);
+
+    }
+
+    .logo-float {
+      top: 5px;
+      left: 120px;
+      transform: translate(50px);
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+    }
+
+
+    #product-frame {
+      height: 60vh;
+    }
+  }
+
+  /* ===== TABLET SMALL (600px – 719px) ===== */
+  @media (min-width: 600px) and (max-width: 719px) {
+    .header-inner {
+      justify-content: space-between;
+      padding: 0.6rem var(--space);
+    }
+
+    .site-nav ul {
+      justify-content: flex-end;
+      gap: 0.7rem;
+    }
+
+    .site-nav a {
+      font-size: 0.95rem;
+    }
+
+    .site-main {
+      padding-top: calc(var(--header-height) + 1.5rem);
+    }
+
+    .content {
+      padding: 1.5rem;
+    }
+
+    .content img.logo {
+      width: min(160px, 45vw);
+    }
+
+    .p.pro {
+      width: min(95%, 500px);
+      font-size: 1.2rem;
+    }
+
+    .logo--livre {
+      width: min(150px, 30vw);
+    }
+
+    .logo-float {
+      top: 10px;
+      left: 120px;
+      transform: translate(50px);
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+    }
+
+    #product-frame {
+      height: 65vh;
+    }
+  }
+
+  /* ===== TABLET MEDIUM (720px – 809px) ===== */
+  @media (min-width: 720px) and (max-width: 809px) {
+    .header-inner {
+      justify-content: space-between;
+      padding: 0.6rem var(--space);
+    }
+
+    .site-nav ul {
+      gap: 0.8rem;
+    }
+
+    .site-nav a {
+      font-size: 1rem;
+      padding: 0.6rem 1rem;
+    }
+
+    .content {
+      padding: 1.75rem;
+    }
+
+    .content img.logo {
+      width: min(180px, 40vw);
+    }
+
+    .p.pro {
+      width: min(90%, 550px);
+      font-size: 1.25rem;
+    }
+
+    .h1.pro {
+      font-size: var(--h1);
+    }
+
+    .logo--livre {
+      width: min(160px, 30vw);
+    }
+
+    .logo-float {
+      top: 10px;
+      left: 120px;
+      transform: translate(50px);
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+    }
+
+    #product-frame {
+      height: 70vh;
+    }
+  }
+
+  /* ===== TABLET LARGE (810px – 1024px) ===== */
+  @media (min-width: 812px) and (max-width: 1023px) {
+    .content {
+      padding: 2rem;
+    }
+
+    .content img.logo {
+      width: min(200px, 35vw);
+    }
+
+    .p.pro {
+      width: min(90%, 650px);
+      font-size: 1.35rem;
+    }
+
+    .logo--livre {
+      width: min(180px, 30vw);
+    }
+
+    .logo-float {
+      top: 10px;
+      left: 120px;
+      transform: translate(50px);
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+    }
+
+    #product-frame {
+      height: 70vh;
+    }
+  }
+
+  /* ===== DESKTOP (1025px – 1440px) ===== */
+  @media (min-width: 1025px) and (max-width: 1440px) {
+    .site-nav ul {
+      gap: 1rem;
+    }
+
+    .site-nav a {
+      font-size: 1rem;
+      padding: 0.65rem 1.2rem;
+    }
+
+    .content {
+      padding: 2rem;
+    }
+
+    .content img.logo {
+      width: min(220px, 30vw);
+    }
+
+    .p.pro {
+      width: min(90%, 700px);
+      font-size: 1.4rem;
+    }
+
+    .logo--livre {
+      width: min(200px, 25vw);
+    }
+
+    .logo-float {
+      top: 10px;
+      left: 5px;
+      transform: translate(50px);
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+    }
+
+    /* Floated images only work on larger screens */
+    .content img.image-right {
+      float: right;
+      margin-left: var(--space);
+      margin-bottom: var(--space);
+      width: min(350px, 40%);
+    }
+
+    .content img.image-left {
+      float: left;
+      margin-right: var(--space);
+      margin-bottom: var(--space);
+      width: min(350px, 40%);
+    }
+
+    .content img.image-right.image-fix {
+      width: 310px;
+    }
+
+    .content img.image-right.image-terra--fix {
+      width: 280px;
+    }
+  }
+
+  /* ===== LARGE DESKTOP / TV (1441px+) ===== */
+  @media (min-width: 1441px) {
+    :root {
+      --maxw: 1400px;
+    }
+
+    .content {
+      padding: clamp(2rem, 4vw, 3rem);
+    }
+
+    .content img.logo {
+      width: min(240px, 25vw);
+    }
+
+    .p.pro {
+      width: 800px;
+      font-size: 1.5rem;
+    }
+
+    .logo--livre {
+      width: min(220px, 20vw);
+    }
+
+    .logo-float {
+      top: 10px;
+      left: 120px;
+      transform: translate(50px);
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+    }
+
+    .content img.image-right {
+      width: min(420px, 100%);
+      margin: 0 0 var(--space) var(--space);
+    }
+
+    .content img.image-left {
+      width: min(420px, 100%);
+      margin: 0 var(--space) var(--space) 0;
+    }
   }
 }
