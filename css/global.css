@@ -562,14 +562,12 @@
   .back-to-top {
     position: sticky;
     top: 50px;
-
     padding: 5px 10px;
     color: #fff;
     background-color: rgba(2, 126, 151, 0.789);
     border: 2px solid rgba(0, 47, 255, 0.431);
-    border-radius: 10px;
+    border-radius: 20px;
     text-decoration: none;
-
     transition: all 0.2s;
   }
 
