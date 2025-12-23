@@ -95,8 +95,8 @@
 
     backdrop-filter: saturate(130%) blur(6px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    margin-top: -224px;
 
-    transform: translateY(-224px);
     /* pequeno */
     z-index: 9999;
   }
@@ -649,7 +649,7 @@
       top: 0;
       backdrop-filter: saturate(130%) blur(6px);
       border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-      transform: translateY(-122px);
+      margin-top: -122px;
       /* pequeno */
       z-index: 9999;
     }
@@ -724,7 +724,7 @@
       top: 0;
       backdrop-filter: saturate(130%) blur(6px);
       border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-      transform: translateY(-142px);
+      margin-top: -142px;
       /* pequeno */
       z-index: 9999;
     }
