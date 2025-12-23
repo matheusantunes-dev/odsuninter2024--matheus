@@ -643,7 +643,13 @@
   ===================================================== */
 
   /* ===== SMALL MOBILE (320px – 404px) ===== */
+
   @media (max-width: 404px) {
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     .site-header.sobre {
       position: sticky;
       top: 0;
@@ -719,6 +725,11 @@
 
   /* ===== MEDIUM MOBILE (405px – 489px) ===== */
   @media (min-width: 405px) and (max-width: 489px) {
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     .site-header.sobre {
       position: sticky;
       top: 0;
@@ -788,6 +799,11 @@
 
   /* ===== PHABLET (490px – 599px) ===== */
   @media (min-width: 490px) and (max-width: 599px) {
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     .header-inner {
       padding: 0.5rem var(--space);
       gap: 0.75rem;
@@ -846,6 +862,11 @@
 
   /* ===== TABLET SMALL (600px – 719px) ===== */
   @media (min-width: 600px) and (max-width: 719px) {
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     .header-inner {
       justify-content: space-between;
       padding: 0.6rem var(--space);
@@ -897,6 +918,11 @@
 
   /* ===== TABLET MEDIUM (720px – 809px) ===== */
   @media (min-width: 720px) and (max-width: 809px) {
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     .header-inner {
       justify-content: space-between;
       padding: 0.6rem var(--space);
@@ -948,6 +974,11 @@
 
   /* ===== TABLET LARGE (810px – 1024px) ===== */
   @media (min-width: 812px) and (max-width: 1023px) {
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     .content {
       padding: 2rem;
     }
@@ -981,6 +1012,10 @@
 
   /* ===== DESKTOP (1025px – 1440px) ===== */
   @media (min-width: 1025px) and (max-width: 1440px) {
+    html {
+      scroll-behavior: smooth;
+    }
+
     .site-nav ul {
       gap: 1rem;
     }
@@ -1042,6 +1077,11 @@
 
   /* ===== LARGE DESKTOP / TV (1441px+) ===== */
   @media (min-width: 1441px) {
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     :root {
       --maxw: 1400px;
     }
