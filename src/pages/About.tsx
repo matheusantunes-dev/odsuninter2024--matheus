@@ -25,7 +25,6 @@ export default function About() {
         }}
         paragraphs={[
           'O projeto foi criado para divulgar práticas de preservação e ampliar o debate sobre a proteção da vida na água e em ambientes terrestres.',
-          'Nesta versão em SPA, a antiga interação em JavaScript foi convertida para um componente React com estado, mensagens dinâmicas e armazenamento local dos feedbacks enviados.',
         ]}
       />
 
