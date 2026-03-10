@@ -93,7 +93,7 @@ textarea {
 
 .logo-float {
   position: absolute;
-  left: max(1rem, calc(50% - 560px));
+  left: max(1rem, calc(40% - 560px));
   width: 42px;
   height: 42px;
   border-radius: 14px;
@@ -439,8 +439,8 @@ textarea {
 
 .social-button svg,
 .social-button img {
-  width: 26px;
-  height: 26px;
+  width: 30px;
+  height: 30px;
 }
 
 .social-button--whatsapp {
@@ -449,8 +449,7 @@ textarea {
 }
 
 .social-button--instagram {
-  background:
-    radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285aeb 90%);
+  background: transparent;
 }
 
 .social-button--instagram img {
