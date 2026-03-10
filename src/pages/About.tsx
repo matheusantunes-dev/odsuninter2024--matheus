@@ -31,7 +31,7 @@ export default function About() {
       <ContentSection
         title="O que você encontra aqui"
         paragraphs={[
-          'A navegação principal reúne início, notícias, quiz e uma área sobre o projeto, tudo dentro de uma única aplicação React com rotas.',
+          'A navegação principal reúne início, notícias, quiz e uma área sobre o projeto, tudo dentro de uma única aplicação com rotas.',
           'O botão de chat fica disponível nesta página para responder perguntas rápidas, listar as ODS e registrar sugestões dos visitantes.',
         ]}
       />
